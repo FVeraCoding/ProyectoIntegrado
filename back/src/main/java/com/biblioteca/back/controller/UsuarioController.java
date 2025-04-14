@@ -25,20 +25,6 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.findAll());
     }
 
-    @GetMapping("/findEmail/{email}")
-    public ResponseEntity<?> findEmail(@PathVariable("email") String email) {
-        if (email == null || email.isEmpty()) {
-            return ResponseEntity.badRequest().body("El email es obligatorio.");
-        }
-
-        UsuarioResponseVO usuario = usuarioService.findByEmail(email);
-        if (usuario == null) {
-            return ResponseEntity.status(404).body("Usuario con email " + email + " no encontrado.");
-        }
-
-        return ResponseEntity.ok(usuario);
-    }
-
     @GetMapping("/findId/{id}")
     public ResponseEntity<?> findId(@PathVariable("id") Long id) {
         UsuarioResponseVO usuario = usuarioService.findById(id);

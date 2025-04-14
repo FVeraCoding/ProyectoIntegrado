@@ -5,15 +5,13 @@ import com.biblioteca.back.enums.RolUsuario;
 public class UsuarioResponseVO {
 
     private Long id;
-    private String email;
     private String nombre;
     private RolUsuario rol;
 
     public UsuarioResponseVO() {}
 
-    public UsuarioResponseVO(Long id, String email, String nombre, RolUsuario rol) {
+    public UsuarioResponseVO(Long id, String nombre, RolUsuario rol) {
         this.id = id;
-        this.email = email;
         this.nombre = nombre;
         this.rol = rol;
     }
@@ -24,14 +22,6 @@ public class UsuarioResponseVO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getNombre() {

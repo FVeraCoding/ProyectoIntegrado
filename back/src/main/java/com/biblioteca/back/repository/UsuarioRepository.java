@@ -9,6 +9,5 @@ import com.biblioteca.back.entity.UsuarioEntity;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Long> {
-	Optional<UsuarioEntity> findByEmail(String email);
 	Optional<UsuarioEntity> findByNombre(String nombre);
 }

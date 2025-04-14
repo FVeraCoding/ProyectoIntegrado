@@ -3,6 +3,7 @@ package com.biblioteca.back.entity;
 import com.biblioteca.back.enums.RolUsuario;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -10,6 +11,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -30,21 +32,23 @@ public class UsuarioEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "rol", nullable = false, length = 8)
     private RolUsuario rol;
+        
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private SocioEntity socio;
     
-    @Column(name = "email", unique = true, length = 255)
-    private String email;
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private EmpleadoEntity empleado;
     
 
     public UsuarioEntity() {
     }
 
 
-    public UsuarioEntity(Long id, String nombre, String password, RolUsuario rol, String email) {
+    public UsuarioEntity(Long id, String nombre, String password, RolUsuario rol) {
         this.id = id;
         this.nombre = nombre;
         this.password = password;
         this.rol = rol;
-        this.email = email;
     }
 
 	public Long getId() {
@@ -83,19 +87,6 @@ public class UsuarioEntity {
 
 	public void setRol(RolUsuario rol) {
 	    this.rol = rol;
-	}
-
-
-
-	public String getEmail() {
-		return email;
-	}
-
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
- 
-    
+	}  
 
 }

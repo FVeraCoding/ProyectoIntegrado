@@ -38,13 +38,6 @@ public class UsuarioServiceImpl implements UsuarioService {
                 .map(UsuarioConverter::toResponseVO)
                 .collect(Collectors.toList());
     }
-
-    @Override
-    public UsuarioResponseVO findByEmail(String email) {
-        return usuarioRepository.findByEmail(email)
-                .map(UsuarioConverter::toResponseVO)
-                .orElse(null);
-    }
     
     @Override
     public UsuarioResponseVO findByNombre(String nombre) {
@@ -64,7 +57,6 @@ public class UsuarioServiceImpl implements UsuarioService {
         Optional<UsuarioEntity> usuarioOpt = usuarioRepository.findById(vo.getId());
         if (usuarioOpt.isPresent()) {
             UsuarioEntity usuario = usuarioOpt.get();
-            usuario.setEmail(vo.getEmail());
             usuario.setNombre(vo.getNombre());
             if (vo.getPassword() != null && !vo.getPassword().isEmpty()) {
                 usuario.setPassword(passwordEncoder.encode(vo.getPassword()));
@@ -90,7 +82,6 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
         return null;
     }
-
 
 
 }

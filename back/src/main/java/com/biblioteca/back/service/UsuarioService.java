@@ -7,7 +7,6 @@ import com.biblioteca.back.vo.UsuarioResponseVO;
 public interface UsuarioService {
     UsuarioResponseVO save(UsuarioRequestVO usuarioRequestVO);
     List<UsuarioResponseVO> findAll();
-    UsuarioResponseVO findByEmail(String email);
     UsuarioResponseVO findById(Long id);
     UsuarioResponseVO findByNombre(String nombre);
     UsuarioResponseVO update(UsuarioRequestVO usuarioVO);
