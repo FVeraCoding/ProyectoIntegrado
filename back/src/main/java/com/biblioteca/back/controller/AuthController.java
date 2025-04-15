@@ -81,29 +81,30 @@ public class AuthController {
 
     @PostMapping("/forgot-password")
     public ResponseEntity<String> enviarCorreoRecuperacion(@RequestBody Map<String, String> body) {
-        String username = body.get("username");
+        String email = body.get("email");
 
-        UsuarioEntity usuario = usuarioRepository.findByNombre(username)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        if (email == null || email.isBlank()) {
+            return ResponseEntity.badRequest().body("El campo email es obligatorio.");
+        }
 
-        // Buscar si es socio o empleado
-        String correo = null;
+        // Buscar usuario asociado al email (desde socio o empleado)
+        UsuarioEntity usuario = null;
 
-        Optional<SocioEntity> socioOpt = socioRepository.findByUsuario(usuario);
+        Optional<SocioEntity> socioOpt = socioRepository.findByCorreoElectronico(email);
         if (socioOpt.isPresent()) {
-            correo = socioOpt.get().getCorreoElectronico();
+            usuario = socioOpt.get().getUsuario();
         } else {
-            Optional<EmpleadoEntity> empleadoOpt = empleadoRepository.findByUsuario(usuario);
+            Optional<EmpleadoEntity> empleadoOpt = empleadoRepository.findByCorreoElectronico(email);
             if (empleadoOpt.isPresent()) {
-                correo = empleadoOpt.get().getCorreoElectronico();
+                usuario = empleadoOpt.get().getUsuario();
             }
         }
 
-        if (correo == null) {
-            return ResponseEntity.badRequest().body("No se pudo determinar el correo electrónico del usuario.");
+        if (usuario == null) {
+            return ResponseEntity.badRequest().body("No se encontró un usuario con ese correo.");
         }
 
-        String token = tokenService.generarToken(username);
+        String token = tokenService.generarToken(usuario.getNombre());
         String enlace = "http://localhost:4200/reset-password?token=" + token;
 
         String mensaje = """
@@ -114,9 +115,9 @@ public class AuthController {
             %s
 
             Si no solicitaste este cambio, ignora este mensaje.
-            """.formatted(username, enlace);
+            """.formatted(usuario.getNombre(), enlace);
 
-        emailService.enviarCorreo(correo, "Recuperar contraseña", mensaje);
+        emailService.enviarCorreo(email, "Recuperar contraseña", mensaje);
 
         return ResponseEntity.ok("Se ha enviado un correo para restablecer la contraseña.");
     }

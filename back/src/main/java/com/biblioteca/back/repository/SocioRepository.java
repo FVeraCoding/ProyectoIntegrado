@@ -13,6 +13,7 @@ public interface SocioRepository extends JpaRepository<SocioEntity, Long> {
 
     Optional<SocioEntity> findByUsuario_Id(Long usuarioId);
     Optional<SocioEntity> findByUsuario(UsuarioEntity usuario);
+    Optional<SocioEntity> findByCorreoElectronico(String correoElectronico);
 
 
     boolean existsByUsuario_Id(Long usuarioId);

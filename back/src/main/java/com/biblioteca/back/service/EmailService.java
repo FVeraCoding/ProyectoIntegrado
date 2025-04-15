@@ -20,7 +20,7 @@ public class EmailService {
         email.setTo(to);
         email.setSubject(asunto);
         email.setText(mensaje);
-        email.setFrom("tu-email@gmail.com"); // el mismo que uses en spring.mail.username
+        email.setFrom("fverabernal@gmail.com"); // el mismo que uses en spring.mail.username
         mailSender.send(email);
     }
 }

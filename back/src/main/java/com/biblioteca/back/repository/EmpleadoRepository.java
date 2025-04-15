@@ -13,5 +13,6 @@ public interface EmpleadoRepository extends JpaRepository<EmpleadoEntity, Long> 
     
     Optional<EmpleadoEntity> findByUsuarioId(Long usuarioId);
     Optional<EmpleadoEntity> findByUsuario(UsuarioEntity usuario);
+    Optional<EmpleadoEntity> findByCorreoElectronico(String correoElectronico);
 
 }
