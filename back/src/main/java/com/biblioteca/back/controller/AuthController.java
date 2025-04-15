@@ -60,7 +60,7 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody LoginVO loginVO) {
         UsuarioResponseVO u = usuarioService.login(loginVO.getNombre(), loginVO.getPassword());
         if (u != null) {
-            String token = jwtTokenUtil.generateToken(u.getNombre());
+        	String token = jwtTokenUtil.generateToken(u.getNombre(), u.getRol().name());
             return ResponseEntity.ok(new TokenVO(token));
         } else {
             return ResponseEntity.status(401).body("Credenciales incorrectas");
@@ -75,7 +75,7 @@ public class AuthController {
         }
 
         UsuarioResponseVO nuevo = usuarioService.save(usuarioVO);
-        String token = jwtTokenUtil.generateToken(nuevo.getNombre());
+    	String token = jwtTokenUtil.generateToken(existente.getNombre(), existente.getRol().name());
         return ResponseEntity.ok(new TokenVO(token));
     }
 

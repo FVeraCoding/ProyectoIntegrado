@@ -4,7 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.biblioteca.back.service.EmpleadoService;
 import com.biblioteca.back.vo.EmpleadoVO;
@@ -22,11 +28,13 @@ public class EmpleadoController {
     }
 
     // Crear empleado con usuario
+    @PreAuthorize("hasRole('EMPLEADO')")
     @PostMapping
-    public ResponseEntity<EmpleadoVO> crearEmpleado(@RequestBody RegistroEmpleadoVO registroVO) {
-        EmpleadoVO empleadoCreado = empleadoService.crearEmpleadoConUsuario(registroVO);
+    public ResponseEntity<EmpleadoVO> crearEmpleado(@RequestBody RegistroEmpleadoVO registroEmpleadoVO) {
+        EmpleadoVO empleadoCreado = empleadoService.crearEmpleadoConUsuario(registroEmpleadoVO);
         return ResponseEntity.ok(empleadoCreado);
     }
+
 
     // Obtener todos los empleados
     @GetMapping("/all")

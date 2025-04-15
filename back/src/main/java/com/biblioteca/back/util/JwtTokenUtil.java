@@ -28,14 +28,16 @@ public class JwtTokenUtil {
     }
 
    
-    public String generateToken(String nombre) {
+    public String generateToken(String nombre, String rol) {
         return Jwts.builder()
                 .setSubject(nombre)
+                .claim("role", rol)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SECRET, SignatureAlgorithm.HS256)
                 .compact();
     }
+
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
         String nombreDelToken = getSubject(token);
@@ -50,4 +52,14 @@ public class JwtTokenUtil {
                 .getBody();
         return claims.getSubject();
     }
+    
+    public String getRole(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(SECRET)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.get("role", String.class);
+    }
+
 }
