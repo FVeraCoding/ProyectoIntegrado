@@ -121,5 +121,35 @@ public class AuthController {
 
         return ResponseEntity.ok("Se ha enviado un correo para restablecer la contraseña.");
     }
+    
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetearContrasena(@RequestBody Map<String, String> body) {
+        String token = body.get("token");
+        String nuevaPassword = body.get("nuevaPassword");
+
+        if (token == null || token.isBlank() || nuevaPassword == null || nuevaPassword.isBlank()) {
+            return ResponseEntity.badRequest().body("Faltan datos necesarios.");
+        }
+
+        String username = tokenService.getUsernameFromToken(token);
+        if (username == null) {
+            return ResponseEntity.badRequest().body("El token es inválido o ha expirado.");
+        }
+
+        Optional<UsuarioEntity> usuarioOpt = usuarioRepository.findByNombre(username);
+        if (usuarioOpt.isEmpty()) {
+            return ResponseEntity.badRequest().body("Usuario no encontrado.");
+        }
+        UsuarioEntity usuario = usuarioOpt.get();
+
+
+        usuario.setPassword(passwordEncoder.encode(nuevaPassword));
+        usuarioRepository.save(usuario);
+
+        tokenService.eliminarToken(token);
+
+        return ResponseEntity.ok("Contraseña actualizada correctamente.");
+    }
+
 
 }
