@@ -1,0 +1,115 @@
+h1{
+  text-align: center;
+  font-size: 2.4rem;
+  color: #9c4507;
+  margin-bottom: 2rem;
+}
+
+.subtitle{
+  font-size: 1.6rem;
+  color: #8b735b;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.novedades {
+  display: flex;
+  justify-content: center;
+
+  .book-grid-img {
+
+    max-width: 60rem;
+  
+  }
+
+}
+
+.libros-grid {
+  margin-bottom: 4rem;
+  text-align: center;
+
+  .section-title {
+    font-size: 2.4rem;
+    color: #9c4507;
+    margin-bottom: 2rem;
+  }
+
+  .libros-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5rem;
+    justify-content: center;
+  }
+
+  .libro-card {
+    width: 100%;
+    background-color: white;
+    border-radius: 1rem;
+    padding: 1rem;
+
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+    }
+
+    img {
+      width: 128px;
+      height: 191px;
+      object-fit: cover;
+      border-radius: 0.6rem;
+      margin: 0 auto 1rem auto;
+      display: block;
+      box-shadow: 0 0.2rem 0.6rem rgba(0, 0, 0, 0.1);
+    }
+
+
+    h3 {
+      font-size: 1.4rem;
+      margin: 0.5rem 0 0.2rem;
+      color: #a15a27;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #8b735b;
+      margin: 0;
+    }
+
+    .anio {
+      font-size: 1rem;
+      color: #c89e80;
+    }
+  }
+
+  
+}
+
+.buscador-libros {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+
+  input {
+    width: 300px;
+    padding: 0.8rem;
+    font-size: 1.4rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    margin-right: 1rem;
+  }
+
+  button {
+    padding: 0.8rem 2rem;
+    font-size: 1.4rem;
+    background-color: #a15a27;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #8a451c;
+    }
+  }
+}

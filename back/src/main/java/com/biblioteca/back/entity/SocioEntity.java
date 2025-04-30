@@ -1,14 +1,16 @@
 package com.biblioteca.back.entity;
 
 import java.time.LocalDate;
-
-import jakarta.persistence.Id;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -44,6 +46,14 @@ public class SocioEntity {
     @OneToOne
     @JoinColumn(name = "usuario_id", nullable = false, unique = true)
     private UsuarioEntity usuario;
+    
+    @ManyToMany
+    @JoinTable(
+    		name = "Reservas_Socio",
+    		joinColumns = @JoinColumn(name = "id_socio"),
+    		inverseJoinColumns = @JoinColumn(name = "id_ejemplar")
+    		)
+    private List<EjemplarEntity> ejemplaresReservados;
 
     public SocioEntity() {}
 

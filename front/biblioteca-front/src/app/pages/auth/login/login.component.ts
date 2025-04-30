@@ -43,7 +43,7 @@ export class LoginComponent {
       next: (res: { token: string }) => {
         this.errorMessage = null;
         localStorage.setItem('token', res.token);
-        this.router.navigate(['/register-empleado']);
+        this.router.navigate(['/home']);
       },
       error: () => {
         this.errorMessage = 'Nombre de usuario o contraseña incorrectos';

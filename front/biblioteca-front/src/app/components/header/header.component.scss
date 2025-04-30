@@ -1,0 +1,44 @@
+.header-container {
+    background-color: #fff9f4;
+    padding: 1.5rem 3rem;
+    box-shadow: 0 0.4rem 1rem rgba(80, 55, 30, 0.15);
+    border-radius: 1.2rem;
+    width: 80%;
+    margin: 2rem auto;
+        display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+     
+  
+    .logo {
+      font-size: 2.4rem;
+      font-weight: bold;
+      color: #9c4507;
+    }
+  
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+  
+      a {
+        text-decoration: none;
+        font-size: 1.6rem;
+        font-weight: 500;
+        color: #8b735b;
+        transition: color 0.3s ease;
+  
+        &:hover {
+          color: #a15a27;
+          cursor: pointer;
+          font-weight: 600;
+        }
+  
+        &.activo {
+          color: #a15a27;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+  

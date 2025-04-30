@@ -41,8 +41,6 @@ public class SocioConverter {
         entity.setDireccion(vo.getDireccion());
         entity.setFechaAlta(vo.getFechaAlta());
 
-        // ⚠️ No se asigna el Usuario aquí directamente porque requiere una instancia de UsuarioEntity.
-        // Esto lo debe hacer el servicio al buscar el usuario correspondiente.
 
         return entity;
     }

@@ -60,7 +60,7 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.update(usuarioVO));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         UsuarioResponseVO usuario = usuarioService.findById(id);
         if (usuario == null) {

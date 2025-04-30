@@ -8,21 +8,25 @@ import com.biblioteca.back.vo.EmpleadoVO;
 @Component
 public class EmpleadoConverter {
 
-    public EmpleadoVO toVO(EmpleadoEntity entity) {
-        if (entity == null) return null;
+	public EmpleadoVO toVO(EmpleadoEntity entity) {
+	    if (entity == null) return null;
 
-        return new EmpleadoVO(
-            entity.getId(),
-            entity.getNombre(),
-            entity.getApellidos(),
-            entity.getFechaNacimiento(),
-            entity.getCorreoElectronico(),
-            entity.getTelefono(),
-            entity.getDireccion(),
-            entity.getFechaAlta(),
-            entity.getCargo()
-        );
-    }
+	    Long idUsuario = entity.getUsuario() != null ? entity.getUsuario().getId() : null;
+
+	    return new EmpleadoVO(
+	        entity.getId(),
+	        entity.getNombre(),
+	        entity.getApellidos(),
+	        entity.getFechaNacimiento(),
+	        entity.getCorreoElectronico(),
+	        entity.getTelefono(),
+	        entity.getDireccion(),
+	        entity.getFechaAlta(),
+	        entity.getCargo(),
+	        idUsuario
+	    );
+	}
+
 
     public EmpleadoEntity toEntity(EmpleadoVO vo) {
         if (vo == null) return null;

@@ -1,0 +1,43 @@
+<section class="home-container">
+    <h1>Bienvenidos a nuestra biblioteca</h1>
+    <p class="subtitle">
+      Descubre, aprende y comparte en nuestra comunidad de lectores
+    </p>
+      
+    <div class="home-banner">
+      <img src="images/libreria-banner.png" alt="Imagen de biblioteca" />
+    </div>
+  
+     <div class="home-grid"> 
+      <div class="home-card">
+        <h2>📚 Libros</h2>
+        <p>Consulta el catálogo completo de la biblioteca.</p>
+        <a routerLink="/libros">Ir a Libros</a>
+      </div>
+      <div class="home-card">
+        <h2>📅 Eventos</h2>
+        <p>Infórmate sobre talleres, charlas y encuentros culturales.</p>
+        <a routerLink="/eventos">Ver eventos</a>
+      </div>
+      <div class="home-card">
+        <h2>🤝 Clubes de lectura</h2>
+        <p>Únete a grupos para compartir tus lecturas favoritas.</p>
+        <a routerLink="/clubes">Ver clubes</a>
+      </div>
+    </div>
+
+
+    <!-- <div class="libros-grid"> 
+      <h2 class="section-title">Libros destacados</h2>
+      <div class="libros-container">
+        <div class="libro-card" *ngFor="let libro of librosDestacados">
+          <img [src]="libro.imagenUrl" alt="{{ libro.titulo }}" />
+          <h3>{{ libro.titulo }}</h3>
+          <p>{{ libro.autor }}</p>
+          <span class="anio">{{ libro.anioPublicacion }}</span>
+        </div>
+      </div>
+    </div>-->
+
+</section>
+  

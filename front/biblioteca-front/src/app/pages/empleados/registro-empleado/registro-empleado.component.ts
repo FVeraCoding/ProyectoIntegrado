@@ -80,9 +80,9 @@ export class RegistroEmpleadoComponent {
         setTimeout(() => this.router.navigate(['/login']), 2000);
       },
       error: (err: any) => {
-        this.mensajeError = err?.error || 'Error al registrar el empleado.';
+        this.mensajeError = 'Error al registrar el empleado.';
         this.mensajeExito = null;
-      }
+      }      
     });
   }
 }

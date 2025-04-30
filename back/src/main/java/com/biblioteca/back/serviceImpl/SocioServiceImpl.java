@@ -81,4 +81,15 @@ public class SocioServiceImpl implements SocioService {
     }
 
 
+    @Override
+    public void eliminarPorIdUsuario(Long idUsuario) {
+    	SocioEntity socio = socioRepository.findByUsuario_Id(idUsuario)
+            .orElseThrow(() -> new RuntimeException("Socio no encontrado con ID de usuario: " + idUsuario));
+        
+        socioRepository.delete(socio);
+        usuarioRepository.deleteById(idUsuario);
+    }
+
+    
+    
 }

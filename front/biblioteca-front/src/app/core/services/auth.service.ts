@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Login } from '../models/login.model'; 
 import { Token } from '../models/token.model';
 import { Usuario } from '../models/usuario.model';
@@ -10,15 +10,49 @@ import { Usuario } from '../models/usuario.model';
 })
 export class AuthService {
   private baseUrl = 'http://localhost:8080/auth';
+  private tokenKey = 'auth-token';
 
   constructor(private http: HttpClient) {}
 
   login(data: Login): Observable<Token> {
-    return this.http.post<Token>(`${this.baseUrl}/login`, data);
+    return this.http.post<Token>(`${this.baseUrl}/login`, data)
+      .pipe(
+        tap(response => {
+          this.saveToken(response.token);
+        })
+      );
   }
 
-  register(data: Usuario): Observable<Token> {
-    return this.http.post<Token>(`${this.baseUrl}/register`, data);
+  private saveToken(token: string): void {
+    localStorage.setItem(this.tokenKey, token);
   }
 
+  getToken(): string | null {
+    return localStorage.getItem(this.tokenKey);
+  }
+
+  logout(): void {
+    localStorage.removeItem(this.tokenKey);
+  }
+
+  getUserRole(): string | null {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+
+    const payload = token.split('.')[1];
+    const decodedPayload = JSON.parse(atob(payload));
+
+    return decodedPayload.role || null;
+  }
+
+  isEmpleado(): boolean {
+    return this.getUserRole() === 'EMPLEADO';
+  }
+  
+  isSocio(): boolean {
+    return this.getUserRole() === 'SOCIO';
+  }
+  
 }

@@ -9,4 +9,6 @@ public interface EmpleadoService {
     List<EmpleadoVO> obtenerTodos();
     EmpleadoVO buscarPorIdUsuario(Long idUsuario);
     EmpleadoVO crearEmpleadoConUsuario(RegistroEmpleadoVO registroVO);
+    void eliminarPorIdUsuario(Long idUsuario);
+
 }

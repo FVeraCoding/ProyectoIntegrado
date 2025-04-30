@@ -13,4 +13,6 @@ public interface SocioService {
     
     SocioVO crearSocioConUsuario(RegistroSocioVO registroVO);
 
+    void eliminarPorIdUsuario(Long idUsuario);
+
 }

@@ -1,0 +1,140 @@
+.home-container {
+    max-width: 1200px;
+    margin: 3rem auto;
+    text-align: center;
+    padding-bottom: 1rem;
+  
+    h1 {
+      font-size: 3rem;
+      color: #9c4507;
+      margin-bottom: 1rem;
+    }
+  
+    .subtitle {
+      font-size: 1.6rem;
+      color: #8b735b;
+      margin-bottom: 3rem;
+    }
+  
+    .home-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 3rem;
+      justify-content: center;
+      margin-top: 3rem;
+      margin-bottom: 2rem;
+    }
+
+    .home-banner {
+      margin: 2rem 0 3rem 0;
+    
+      img {
+        width: 70%;
+        max-height: 40rem;
+        border-radius: 1rem;
+        box-shadow: 0 0.4rem 1rem rgba(80, 55, 30, 0.15);
+        display: block;
+        margin: 0 auto;
+      }
+    }
+    
+    .home-card {
+      background-color: #fff9f4;
+      padding: 4rem; 
+      border-radius: 1.2rem;
+      box-shadow: 0 0.6rem 1.6rem rgba(80, 55, 30, 0.2);
+      text-align: center;
+      max-width: 800px; 
+      margin: 0 auto; 
+    
+      h2 {
+        font-size: 2rem;
+        color: #a15a27;
+        margin-bottom: 0.5rem;
+      }
+    
+      p {
+        font-size: 1.4rem;
+        color: #8b735b;
+        margin-bottom: 1rem;
+      }
+    
+      a {
+        display: inline-block;
+        margin-top: 1rem;
+        color: #a15a27;
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 1.2rem;
+    
+        &:hover {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+    }
+    
+    
+
+    .libros-grid {
+      width: 100%;
+      margin-bottom: 4rem;
+      text-align: center;
+    
+      .section-title {
+        font-size: 2.4rem;
+        color: #9c4507;
+        margin-bottom: 2rem;
+      }
+    
+      .libros-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 5rem;
+        justify-content: center;
+      }
+    
+      .libro-card {
+        width: 100%;
+        background-color: white;
+        border-radius: 1rem;
+        padding: 1rem;
+  
+        &:hover {
+          transform: scale(1.05);
+          box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.2);
+          cursor: pointer;
+        }
+    
+        img {
+          width: 128px;
+          height: 191px;
+          object-fit: cover;
+          border-radius: 0.6rem;
+          margin: 0 auto 1rem auto;
+          display: block;
+          box-shadow: 0 0.2rem 0.6rem rgba(0, 0, 0, 0.1);
+        }
+        
+    
+        h3 {
+          font-size: 1.4rem;
+          margin: 0.5rem 0 0.2rem;
+          color: #a15a27;
+        }
+    
+        p {
+          font-size: 1.2rem;
+          color: #8b735b;
+          margin: 0;
+        }
+    
+        .anio {
+          font-size: 1rem;
+          color: #c89e80;
+        }
+      }
+    }
+      
+  }
+  

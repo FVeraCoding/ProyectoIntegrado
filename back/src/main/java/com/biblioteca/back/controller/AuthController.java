@@ -75,9 +75,10 @@ public class AuthController {
         }
 
         UsuarioResponseVO nuevo = usuarioService.save(usuarioVO);
-    	String token = jwtTokenUtil.generateToken(existente.getNombre(), existente.getRol().name());
+        String token = jwtTokenUtil.generateToken(nuevo.getNombre(), nuevo.getRol().name());
         return ResponseEntity.ok(new TokenVO(token));
     }
+
 
     @PostMapping("/forgot-password")
     public ResponseEntity<String> enviarCorreoRecuperacion(@RequestBody Map<String, String> body) {
