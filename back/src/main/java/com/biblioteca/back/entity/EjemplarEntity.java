@@ -28,11 +28,13 @@ public class EjemplarEntity {
 	@ManyToMany(mappedBy="ejemplaresReservados")
 	private List<SocioEntity> socios;
 
-	public EjemplarEntity(Long id, Boolean reservado, LibroEntity libro) {
-		super();
-		this.id = id;
+	public EjemplarEntity(Boolean reservado, LibroEntity libro) {
 		this.reservado = reservado;
 		this.libro = libro;
+	}
+	
+	public EjemplarEntity() {
+		
 	}
 
 	public Long getId() {

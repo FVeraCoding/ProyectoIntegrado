@@ -1,0 +1,126 @@
+.libro-detalle-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+  margin: 4rem auto;
+  max-width: 1000px;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 1rem;
+
+  .libro-detalle-img {
+    flex: 1 1 250px;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+
+    img {
+      width: 200px;
+      height: auto;
+      object-fit: cover;
+      border-radius: 0.6rem;
+      box-shadow: 0 0.2rem 0.6rem rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  .libro-detalle-info {
+    flex: 2 1 500px;
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #9c4507;
+    }
+
+    p {
+      font-size: 1.4rem;
+      margin: 0.5rem 0;
+      color: #4b3b2a;
+
+      strong {
+        color: #a15a27;
+      }
+    }
+
+    h3 {
+      margin-top: 2rem;
+      font-size: 1.6rem;
+      color: #a15a27;
+    }
+
+    ul {
+      padding-left: 1.5rem;
+      font-size: 1.3rem;
+
+      li {
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+}
+
+
+.listaLibrosRelacionados {
+  width: 100%;
+  margin-top: 4rem;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 1rem;
+
+  h2 {
+    font-size: 1.8rem;
+    color: #a15a27;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .libros-relacionados-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 2rem;
+    justify-content: center;
+
+    .libro-card {
+      background-color: #fff;
+      border-radius: 1rem;
+      padding: 1rem;
+      text-align: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 0.2rem 0.6rem rgba(0, 0, 0, 0.1);
+
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.15);
+        cursor: pointer;
+      }
+
+      img {
+        width: 100px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 0.6rem;
+        margin-bottom: 0.8rem;
+        box-shadow: 0 0.2rem 0.6rem rgba(0, 0, 0, 0.1);
+      }
+
+      h4 {
+        font-size: 1.2rem;
+        color: #9c4507;
+        margin: 0.4rem 0;
+      }
+
+      a{
+                text-decoration: none;
+
+      }
+    }
+  }
+}
+
+
+.cargando {
+  text-align: center;
+  font-size: 1.6rem;
+  margin-top: 4rem;
+  color: #a15a27;
+}

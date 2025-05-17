@@ -5,15 +5,16 @@ import java.util.Optional;
 
 import com.biblioteca.back.vo.EjemplarVO;
 
+
 public interface EjemplarService {
 
-	Optional<EjemplarVO> findEjemplarById();
+	EjemplarVO findEjemplarById(Long id);
 	
 	EjemplarVO addEjemplar(EjemplarVO ejemplarVO);
 	
 	void deleteEjemplarById(Long id);
 	
-	void updateEjemplarById();
+	void updateEjemplarById(Long id, EjemplarVO ejemplarVO);
 	
 	List<EjemplarVO> listAllEjemplares();
 	

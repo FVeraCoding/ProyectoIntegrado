@@ -5,11 +5,12 @@ import { LibrosService } from '../../core/services/libros.service';
 import { AuthService } from '../../core/services/auth.service';
 import { Libro } from '../../core/models/libro.model';
 import { NotificationService } from '../../core/services/notification.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-libros',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './libros.component.html',
   styleUrl: './libros.component.scss'
 })

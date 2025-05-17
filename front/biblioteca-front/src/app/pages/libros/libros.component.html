@@ -28,11 +28,13 @@
   <h2 class="section-title">Resultados de búsqueda</h2>
   <div class="libros-container">
     <div class="libro-card" *ngFor="let libro of librosBuscados">
-      <img [src]="libro.imagenUrl" alt="{{ libro.titulo }}" />
-      <h3>{{ libro.titulo }}</h3>
-      <p>{{ libro.autor }}</p>
-      <span class="anio">{{ libro.anioPublicacion }}</span>
-      <button (click)="addBook(libro)">Añadir a la biblioteca</button>
+      <a [routerLink] = " ['/libros', libro.id]  ">
+        <img [src]="libro.imagenUrl" alt="{{ libro.titulo }}" />
+        <h3>{{ libro.titulo }}</h3>
+        <p>{{ libro.autor }}</p>
+        <span class="anio">{{ libro.anioPublicacion }}</span>
+        <button (click)="addBook(libro)">Añadir a la biblioteca</button>
+      </a>
     </div>
   </div>
 </div>
@@ -42,10 +44,12 @@
   <h2 class="section-title">Libros destacados</h2>
   <div class="libros-container">
     <div class="libro-card" *ngFor="let libro of (isSocio() ? librosFiltrados : librosDestacados)">
-      <img [src]="libro.imagenUrl" alt="{{ libro.titulo }}" />
-      <h3>{{ libro.titulo }}</h3>
-      <p>{{ libro.autor }}</p>
-      <span class="anio">{{ libro.anioPublicacion }}</span>
+      <a [routerLink] = " ['/libros', libro.id] ">
+        <img [src]="libro.imagenUrl" alt="{{ libro.titulo }}" />
+        <h3>{{ libro.titulo }}</h3>
+        <p>{{ libro.autor }}</p>
+        <span class="anio">{{ libro.anioPublicacion }}</span>
+      </a>
     </div>
   </div>
 </div>

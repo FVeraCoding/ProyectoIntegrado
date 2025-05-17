@@ -13,6 +13,8 @@ import com.biblioteca.back.converter.EjemplarConverter;
 
 @Component
 public class LibroConverter {
+	
+	private EjemplarConverter ejemplarConverter;
 
     public LibroVO toVO(LibroEntity entity) {
         if (entity == null) {
@@ -32,7 +34,7 @@ public class LibroConverter {
 
         if (entity.getEjemplares() != null) {
             List<EjemplarVO> ejemplaresVO = entity.getEjemplares().stream()
-                    .map(EjemplarConverter::toVO) 
+                    .map(ejemplarConverter::toVO) 
                     .collect(Collectors.toList());
             vo.setEjemplares(ejemplaresVO);
         }
