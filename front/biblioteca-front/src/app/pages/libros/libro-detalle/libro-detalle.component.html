@@ -3,33 +3,38 @@
     <img [src]="libro.imagenUrl" alt="Portada del libro" />
   </div>
 
-<div class="libro-detalle-info">
-  <h2 *ngIf="libro.titulo">{{ libro.titulo }}</h2>
+  <div class="libro-detalle-info">
+    <h2 *ngIf="libro.titulo">{{ libro.titulo }}</h2>
 
-  <p *ngIf="libro.autor"><strong>Autor:</strong> {{ libro.autor }}</p>
-  <p *ngIf="libro.editorial"><strong>Editorial:</strong> {{ libro.editorial }}</p>
-  <p *ngIf="libro.anioPublicacion"><strong>Año de publicación:</strong> {{ libro.anioPublicacion }}</p>
-  <p *ngIf="libro.genero"><strong>Género:</strong> {{ libro.genero }}</p>
-  <p *ngIf="libro.isbn"><strong>ISBN:</strong> {{ libro.isbn }}</p>
-</div>
+    <p *ngIf="libro.autor"><strong>Autor:</strong> {{ libro.autor }}</p>
+    <p *ngIf="libro.editorial"><strong>Editorial:</strong> {{ libro.editorial
+      }}</p>
+    <p *ngIf="libro.anioPublicacion"><strong>Año de publicación:</strong> {{
+      libro.anioPublicacion }}</p>
+    <p *ngIf="libro.genero"><strong>Género:</strong> {{ libro.genero }}</p>
+    <p *ngIf="libro.isbn"><strong>ISBN:</strong> {{ libro.isbn }}</p>
+    <div class="ejemplaresDisponibles">
+      <h4>Ejemplares disponibles: {{ejemplaresRelacionados.length}}</h4>
+      <button (click)="reservarEjemplar()">Reservar</button>
+    </div>
 
+  </div>
 
   <div class="listaLibrosRelacionados" *ngIf="librosRelacionados.length > 0">
     <h2>Otros libros que te pueden interesar</h2>
     <div class="libros-relacionados-grid">
-        <div class="libro-card" *ngFor="let libro of librosRelacionados">
-            <a [routerLink] = " ['/libros', libro.id] ">
+      <div class="libro-card" *ngFor="let libro of librosRelacionados">
+        <a [routerLink]=" ['/libros', libro.id] ">
 
-                <img [src]="libro.imagenUrl" alt = {{libro.titulo}}/>
-                <h4>{{libro.titulo}}</h4>
-                <h4>{{libro.autor}}</h4>
+          <img [src]="libro.imagenUrl" alt={{libro.titulo}}/>
+          <h4>{{libro.titulo}}</h4>
+          <h4>{{libro.autor}}</h4>
 
-            </a>
-        </div>
+        </a>
+      </div>
     </div>
   </div>
 
-
-<div *ngIf="!libro">
-  <p class="cargando">Cargando libro...</p>
-</div>
+  <div *ngIf="!libro">
+    <p class="cargando">Cargando libro...</p>
+  </div>

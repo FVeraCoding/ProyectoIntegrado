@@ -113,3 +113,16 @@ h1{
     }
   }
 }
+
+.paginar{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  gap: 2rem;
+
+  .boton-paginas{
+    width: 8rem;
+    padding: 0.2rem;
+  }
+}

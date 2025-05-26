@@ -46,13 +46,34 @@ export class AuthService {
 
     return decodedPayload.role || null;
   }
+isEmpleado(): boolean {
+  const token = this.getToken();
+  if (!token) return false;
 
-  isEmpleado(): boolean {
-    return this.getUserRole() === 'EMPLEADO';
+  try {
+    const payload = token.split('.')[1];
+    const decodedPayload = JSON.parse(atob(payload));
+    return decodedPayload.role === 'EMPLEADO';
+  } catch (error) {
+    console.error('Error decoding token', error);
+    return false;
   }
+}
+
   
   isSocio(): boolean {
-    return this.getUserRole() === 'SOCIO';
+  const token = this.getToken();
+  if (!token) return false;
+
+  try {
+    const payload = token.split('.')[1];
+    const decodedPayload = JSON.parse(atob(payload));
+    return decodedPayload.role === 'SOCIO';
+  } catch (error) {
+    console.error('Error decoding token', error);
+    return false;
   }
+}
+
   
 }

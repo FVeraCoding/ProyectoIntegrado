@@ -2,54 +2,57 @@
   <div class="title">
     <h1>Te damos la bienvenida a la sección de Libros</h1>
   </div>
-  
-  
+
   <div class="subtitle">
-    <p>En esta sección puedes consultar los libros disponibles en la biblioteca</p>
+    <p>En esta sección puedes consultar los libros disponibles en la
+      biblioteca</p>
   </div>
-  
 
-<!-- Buscador solo para EMPLEADOS -->
-<div class="buscador-libros" *ngIf="isEmpleado()">
-  <input [(ngModel)]="queryBusqueda" placeholder="Buscar libros" />
-  <button (click)="buscarLibros()">Buscar</button>
-</div>
+  <!-- Buscador solo para EMPLEADOS -->
+  <div class="buscador-libros" *ngIf="isEmpleado()">
+    <input [(ngModel)]="queryBusqueda" placeholder="Buscar libros" />
+    <button (click)="buscarLibros()">Buscar</button>
+  </div>
 
+  <!-- Buscador LOCAL para SOCIOS y usuarios no logueados -->
+  <div class="buscador-libros" *ngIf="!isEmpleado()">
+    <input [(ngModel)]="queryBusquedaSocio" placeholder="Buscar libros"
+      (input)="buscarLibrosLocales()" />
+  </div>
 
-<!-- Buscador LOCAL para SOCIOS y usuarios no logueados -->
-<div class="buscador-libros" *ngIf="!isEmpleado()">
-  <input [(ngModel)]="queryBusquedaSocio" placeholder="Buscar libros" (input)="buscarLibrosLocales()" />
-</div>
-
-
-
-<!-- Resultados de búsqueda (solo empleados) -->
-<div class="libros-grid" *ngIf="isEmpleado() && librosBuscados.length > 0">
-  <h2 class="section-title">Resultados de búsqueda</h2>
-  <div class="libros-container">
-    <div class="libro-card" *ngFor="let libro of librosBuscados">
-      <a [routerLink] = " ['/libros', libro.id]  ">
-        <img [src]="libro.imagenUrl" alt="{{ libro.titulo }}" />
-        <h3>{{ libro.titulo }}</h3>
-        <p>{{ libro.autor }}</p>
-        <span class="anio">{{ libro.anioPublicacion }}</span>
-        <button (click)="addBook(libro)">Añadir a la biblioteca</button>
-      </a>
+  <!-- Resultados de búsqueda (solo empleados) -->
+  <div class="libros-grid" *ngIf="isEmpleado() && librosBuscados.length > 0">
+    <h2 class="section-title">Resultados de búsqueda</h2>
+    <div class="libros-container">
+      <div class="libro-card" *ngFor="let libro of librosBuscados">
+        <a [routerLink]="libro.id != null ? ['/libros', libro.id] : null">
+          <img [src]="libro.imagenUrl" alt="{{ libro.titulo }}" />
+          <h3>{{ libro.titulo }}</h3>
+          <p>{{ libro.autor }}</p>
+          <span class="anio">{{ libro.anioPublicacion }}</span>
+          <button (click)="addBook(libro)">Añadir a la biblioteca</button>
+        </a>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Libros destacados (para TODOS) -->
-<div class="libros-grid">
-  <h2 class="section-title">Libros destacados</h2>
-  <div class="libros-container">
-    <div class="libro-card" *ngFor="let libro of (isSocio() ? librosFiltrados : librosDestacados)">
-      <a [routerLink] = " ['/libros', libro.id] ">
-        <img [src]="libro.imagenUrl" alt="{{ libro.titulo }}" />
-        <h3>{{ libro.titulo }}</h3>
-        <p>{{ libro.autor }}</p>
-        <span class="anio">{{ libro.anioPublicacion }}</span>
-      </a>
+  <!-- Libros destacados (para TODOS) -->
+  <div class="libros-grid">
+    <h2 class="section-title">Libros destacados</h2>
+    <div class="libros-container">
+      <div class="libro-card"
+        *ngFor="let libro of (isSocio() ? librosFiltrados : librosDestacados)">
+        <a [routerLink]=" ['/libros', libro.id] ">
+          <img [src]="libro.imagenUrl" alt="{{ libro.titulo }}" />
+          <h3>{{ libro.titulo }}</h3>
+          <p>{{ libro.autor }}</p>
+          <span class="anio">{{ libro.anioPublicacion }}</span>
+        </a>
+      </div>
     </div>
   </div>
-</div>
+
+  <div class="paginar">
+    <button class="boton-paginas" (click)="pasarPaginaBefore()">Atras</button>
+    <button class="boton-paginas" (click)="pasarPaginaAfter()">Adelante</button>
+  </div>

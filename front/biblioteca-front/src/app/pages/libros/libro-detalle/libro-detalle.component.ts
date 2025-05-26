@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Libro } from '../../../core/models/libro.model';
 import { LibrosService } from '../../../core/services/libros.service';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
+import { EjemplaresService } from '../../../core/services/ejemplares.service';
+import { Ejemplar } from '../../../core/models/ejemplar.model';
 
 @Component({
   selector: 'app-libro-detalle',
@@ -11,35 +13,72 @@ import { RouterModule } from '@angular/router';
   templateUrl: './libro-detalle.component.html',
   styleUrl: './libro-detalle.component.scss'
 })
-export class LibroDetalleComponent implements OnInit{
-  
+export class LibroDetalleComponent implements OnInit {
+
   public libro: Libro | null = null;
   public librosRelacionados: Libro[] = [];
+  public ejemplaresRelacionados: Ejemplar[] = [];
+  private idLibro: number = 0;
 
 
-constructor(
+  constructor(
+    private router: Router,
     private route: ActivatedRoute,
-    private libroService: LibrosService
-  ) {}
+    private libroService: LibrosService,
+    private ejemplarService: EjemplaresService,
+  ) { }
+
 
   ngOnInit(): void {
-  this.route.paramMap.subscribe(params => {
-    const idLibro = Number(params.get('id'));
+    this.route.paramMap.subscribe(params => {
+      this.idLibro = Number(params.get('id'));
+      if (!isNaN(this.idLibro)) {
+        this.cargarLibro(this.idLibro);
+        this.cargarEjemplaresDisponibles(this.idLibro);
+        this.cargarLibrosRelacionados(this.idLibro);
+      }
+    });
+  }
 
-    if (!isNaN(idLibro)) {
-      this.libroService.getLibroPorId(idLibro).subscribe((libro: Libro) => {
-        this.libro = libro;
+  private cargarLibro(idLibro: number): void {
+    this.libroService.getLibroPorId(idLibro).subscribe((libro: Libro) => {
+      this.libro = libro;
+    });
+  }
 
-        this.libroService.obtenerLibros().subscribe((todos: Libro[]) => {
-          this.librosRelacionados = todos
-            .filter(l => l.id !== libro.id && l.genero === libro.genero)
-            .slice(0, 6);
-        });
+  private cargarEjemplaresDisponibles(idLibro: number): void {
+    this.ejemplarService.findAllEjemplares().subscribe((todos: Ejemplar[]) => {
+      this.ejemplaresRelacionados = [...todos.filter(e => e.idLibro === idLibro && e.reservado === false)];
+    });
+  }
+
+  private cargarLibrosRelacionados(idLibro: number): void {
+    this.libroService.getLibroPorId(idLibro).subscribe((libro: Libro) => {
+      this.libroService.obtenerLibros().subscribe((todos: Libro[]) => {
+        this.librosRelacionados = todos
+          .filter(l => l.id !== libro.id && l.genero === libro.genero)
+          .slice(0, 6);
       });
-    }
-  });
-}
+    });
+  }
 
+  public reservarEjemplar(): void {
+    if (this.ejemplaresRelacionados.length > 0) {
+      const ejemplar = this.ejemplaresRelacionados[0];
+      const ejemplarReservado: Ejemplar = { ...ejemplar, reservado: true };
+
+      this.ejemplarService.updateEjemplarById(ejemplar.id, ejemplarReservado)
+        .subscribe({
+          next: () => {
+            console.log("Ejemplar reservado correctamente");
+            this.cargarEjemplaresDisponibles(this.idLibro);
+          },
+          error: (e) => {
+            console.log("Ha ocurrido un error", e);
+          }
+        });
+    }
+  }
 
 
 }
