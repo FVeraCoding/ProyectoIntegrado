@@ -63,7 +63,7 @@ public class EjemplarController {
 	public ResponseEntity<?> actualizarEjemplarPorID(@PathVariable Long id, @RequestBody EjemplarVO actualizado) {
 		try {
 			ejemplarService.updateEjemplarById(id, actualizado);
-			return ResponseEntity.ok().body("Ejemplar actualizado correctamente");
+			return ResponseEntity.ok().body(null);
 		} catch (EntityNotFoundException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se ha encontrado el ejemplar con id " + id);
 		} catch (Exception e) {

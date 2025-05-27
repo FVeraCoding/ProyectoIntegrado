@@ -9,8 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -47,27 +46,30 @@ public class SocioEntity {
     @JoinColumn(name = "usuario_id", nullable = false, unique = true)
     private UsuarioEntity usuario;
     
-    @ManyToMany
-    @JoinTable(
-    		name = "Reservas_Socio",
-    		joinColumns = @JoinColumn(name = "id_socio"),
-    		inverseJoinColumns = @JoinColumn(name = "id_ejemplar")
-    		)
-    private List<EjemplarEntity> ejemplaresReservados;
+    @OneToMany(mappedBy = "socio")
+    private List<ReservaEntity> reservas;
 
     public SocioEntity() {}
 
-    public SocioEntity(String nombre, String apellidos, LocalDate fechaNacimiento, String correoElectronico,
-                       String telefono, String direccion, LocalDate fechaAlta, UsuarioEntity usuario) {
-        this.nombre = nombre;
-        this.apellidos = apellidos;
-        this.fechaNacimiento = fechaNacimiento;
-        this.correoElectronico = correoElectronico;
-        this.telefono = telefono;
-        this.direccion = direccion;
-        this.fechaAlta = fechaAlta;
-        this.usuario = usuario;
-    }
+
+
+	public SocioEntity(Long id, String nombre, String apellidos, LocalDate fechaNacimiento, String correoElectronico,
+			String telefono, String direccion, LocalDate fechaAlta, UsuarioEntity usuario,
+			List<ReservaEntity> reservas) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.fechaNacimiento = fechaNacimiento;
+		this.correoElectronico = correoElectronico;
+		this.telefono = telefono;
+		this.direccion = direccion;
+		this.fechaAlta = fechaAlta;
+		this.usuario = usuario;
+		this.reservas = reservas;
+	}
+
+
 
 	public Long getId() {
 		return id;
@@ -140,6 +142,20 @@ public class SocioEntity {
 	public void setUsuario(UsuarioEntity usuario) {
 		this.usuario = usuario;
 	}
+
+
+
+	public List<ReservaEntity> getReservas() {
+		return reservas;
+	}
+
+
+
+	public void setReservas(List<ReservaEntity> reservas) {
+		this.reservas = reservas;
+	}
+	
+	
 
     
 }

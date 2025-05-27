@@ -24,19 +24,19 @@ public class EjemplarConverter {
 			return null;
 		}else {
 			
-		    System.out.println(">> toVO -> entity.getId(): " + entity.getId());
-
+			EjemplarVO vo = new EjemplarVO(entity.getReservado());
 			
-			return new EjemplarVO(
-					entity.getId(),
-					entity.getReservado(),
-					entity.getLibro() != null ? entity.getLibro().getId() : null
-					);
+			vo.setId(entity.getId());
+			vo.setIdLibro(entity.getId());
+			vo.setReservas(entity.getReservasEjemplar());
+			
+			return vo;
 		}
 		
 	}
 	
 	public EjemplarEntity toEntity(EjemplarVO vo) {
+		
 		if(vo == null) {
 			return null;
 		}else {
@@ -47,10 +47,14 @@ public class EjemplarConverter {
 				libroAsociado = libroRepo.findById(vo.getIdLibro()).orElseThrow(() -> new RuntimeException("No se ha encontrado el libro"));
 			}
 			
-			return new EjemplarEntity(
-					vo.isReservado(),
-					libroAsociado
-					);	
+			EjemplarEntity entity = new EjemplarEntity();
+			
+			entity.setId(vo.getId());
+			entity.setReservado(vo.isReservado());
+			entity.setLibro(libroAsociado);
+			entity.setReservasEjemplar(vo.getReservas());
+			
+			return entity;
 		}
 	}
 }

@@ -7,8 +7,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,14 +25,13 @@ public class EjemplarEntity {
 	@JoinColumn(name = "id_libro")
 	LibroEntity libro;
 	
-	@ManyToMany(mappedBy="ejemplaresReservados")
-	private List<SocioEntity> socios;
-
-	public EjemplarEntity(Boolean reservado, LibroEntity libro) {
-		this.reservado = reservado;
-		this.libro = libro;
-	}
+	@OneToMany(mappedBy="ejemplar")
+	private List<ReservaEntity> reservasEjemplar;
 	
+	public EjemplarEntity(Boolean reservado) {
+		this.reservado = reservado;
+	}
+
 	public EjemplarEntity() {
 		
 	}
@@ -60,6 +59,15 @@ public class EjemplarEntity {
 	public void setLibro(LibroEntity libro) {
 		this.libro = libro;
 	}
+
+	public List<ReservaEntity> getReservasEjemplar() {
+		return reservasEjemplar;
+	}
+
+	public void setReservasEjemplar(List<ReservaEntity> reservasEjemplar) {
+		this.reservasEjemplar = reservasEjemplar;
+	}
+		
 	
 	
 }
