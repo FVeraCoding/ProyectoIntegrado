@@ -1,17 +1,19 @@
 
 package com.biblioteca.back.vo;
 
+import java.util.List;
+
+import com.biblioteca.back.entity.ReservaEntity;
+
 public class EjemplarVO {
 
 	private Long id;
 	private boolean reservado;
 	private Long idLibro;
+	private List<ReservaEntity> reservas;
 	
-	public EjemplarVO(Long id, boolean reservado, Long idLibro) {
-		super();
-		this.id = id;
+	public EjemplarVO(boolean reservado) {
 		this.reservado = reservado;
-		this.idLibro = idLibro;
 	}
 
 	public Long getId() {
@@ -36,6 +38,14 @@ public class EjemplarVO {
 
 	public void setIdLibro(Long idLibro) {
 		this.idLibro = idLibro;
+	}
+
+	public List<ReservaEntity> getReservas() {
+		return reservas;
+	}
+
+	public void setReservas(List<ReservaEntity> reservas) {
+		this.reservas = reservas;
 	}
 	
 	

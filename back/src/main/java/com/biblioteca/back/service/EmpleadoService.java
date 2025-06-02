@@ -10,5 +10,5 @@ public interface EmpleadoService {
     EmpleadoVO buscarPorIdUsuario(Long idUsuario);
     EmpleadoVO crearEmpleadoConUsuario(RegistroEmpleadoVO registroVO);
     void eliminarPorIdUsuario(Long idUsuario);
-
+    EmpleadoVO findById(Long id);
 }

@@ -87,4 +87,11 @@ public class EmpleadoServiceImpl implements EmpleadoService {
         usuarioRepository.deleteById(idUsuario);
     }
 
+	@Override
+	public EmpleadoVO findById(Long id) {
+		EmpleadoEntity entity = empleadoRepository.findById(id).orElseThrow(() -> new RuntimeException("No se ha encontrado el empleado con el id especificado"));
+		EmpleadoVO vo = empleadoConverter.toVO(entity);
+		return vo;
+	}
+
 }

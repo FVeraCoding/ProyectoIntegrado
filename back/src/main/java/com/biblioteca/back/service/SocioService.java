@@ -9,6 +9,8 @@ public interface SocioService {
 
 	List<SocioVO> obtenerTodos();
 	
+	SocioVO findById(Long id);
+	
     SocioVO buscarPorIdUsuario(Long idUsuario);
     
     SocioVO crearSocioConUsuario(RegistroSocioVO registroVO);

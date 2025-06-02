@@ -1,14 +1,15 @@
 package com.biblioteca.back.entity;
 
 import java.time.LocalDate;
-
-import jakarta.persistence.Id;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -47,6 +48,12 @@ public class EmpleadoEntity {
     @OneToOne
     @JoinColumn(name = "usuario_id", nullable = false, unique = true)
     private UsuarioEntity usuario;
+    
+    @OneToMany(mappedBy = "empleadoOrganizador")
+    private List<ClubEntity> listaClubesOrganizados;
+    
+    @OneToMany(mappedBy="empleadoOrganizador")
+    private List<EventoEntity> listaEventosOrganizados;
 
     public EmpleadoEntity() {}
 

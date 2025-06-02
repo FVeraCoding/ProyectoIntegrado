@@ -90,6 +90,13 @@ public class SocioServiceImpl implements SocioService {
         usuarioRepository.deleteById(idUsuario);
     }
 
+	@Override
+	public SocioVO findById(Long id) {
+		SocioEntity entity = socioRepository.findById(id).orElseThrow(() -> new RuntimeException("Socio no encontrado"));
+		SocioVO vo = socioConverter.toVO(entity);
+		return vo;
+	}
+
     
     
 }

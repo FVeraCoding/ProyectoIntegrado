@@ -3,19 +3,23 @@ package com.biblioteca.back.converter;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.biblioteca.back.entity.LibroEntity;
-import com.biblioteca.back.entity.EjemplarEntity;
-import com.biblioteca.back.vo.LibroVO;
 import com.biblioteca.back.vo.EjemplarVO;
-import com.biblioteca.back.converter.EjemplarConverter;
+import com.biblioteca.back.vo.LibroVO;
 
 @Component
 public class LibroConverter {
 	
 	private EjemplarConverter ejemplarConverter;
 
+	@Autowired
+	public LibroConverter(EjemplarConverter converter) {
+		this.ejemplarConverter = converter;
+	}
+	
     public LibroVO toVO(LibroEntity entity) {
         if (entity == null) {
             return null;

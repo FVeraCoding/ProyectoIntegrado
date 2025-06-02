@@ -1,0 +1,16 @@
+package com.biblioteca.back.service;
+
+import java.util.List;
+
+import com.biblioteca.back.vo.EventoVO;
+
+public interface EventoService {
+
+	List<EventoVO> findAll();
+	EventoVO findById(Long id);
+	EventoVO findByNombre(String nombre);
+	EventoVO addEvento(EventoVO evento);
+	boolean deleteEventoById(Long id);
+	EventoVO updateEvento(EventoVO evento);
+	
+}
