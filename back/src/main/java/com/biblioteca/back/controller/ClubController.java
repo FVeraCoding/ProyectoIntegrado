@@ -2,8 +2,10 @@ package com.biblioteca.back.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,23 +14,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.biblioteca.back.converter.ClubConverter;
-import com.biblioteca.back.converter.SocioConverter;
-import com.biblioteca.back.entity.ClubEntity;
-import com.biblioteca.back.entity.SocioEntity;
 import com.biblioteca.back.service.ClubService;
-import com.biblioteca.back.service.SocioService;
 import com.biblioteca.back.vo.ClubVO;
-import com.biblioteca.back.vo.SocioVO;
 
 @RestController
 @RequestMapping("/club")
 public class ClubController {
 
 	private ClubService service;
-
-
 	
+	@Autowired
 	public ClubController(ClubService service) {
 		this.service = service;
 	}
@@ -78,7 +73,15 @@ public class ClubController {
 		return ResponseEntity.ok(actualizado);
 	}
 	
-	
+	@DeleteMapping("/{idClub}")
+	public ResponseEntity<Void> deleteClub(@PathVariable Long idClub){
+		ClubVO club= service.findClubById(idClub);
+		
+		boolean borrado = service.deleteClub(club);
+				
+	    return borrado ? ResponseEntity.status(HttpStatus.NO_CONTENT).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+				
+	}
 	
 	
 	

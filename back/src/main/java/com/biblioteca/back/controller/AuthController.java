@@ -59,13 +59,31 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginVO loginVO) {
         UsuarioResponseVO u = usuarioService.login(loginVO.getNombre(), loginVO.getPassword());
+
         if (u != null) {
-        	String token = jwtTokenUtil.generateToken(u.getNombre(), u.getRol().name());
+            Long idParaToken = u.getId();
+
+            
+            if (u.getRol().name().equals("SOCIO")) {
+                Optional<SocioEntity> socio = socioRepository.findByUsuarioId(u.getId());
+                if (socio.isPresent()) {
+                    idParaToken = socio.get().getId(); 
+                } else {
+                    
+                    System.err.println("Usuario con rol SOCIO no tiene entidad Socio asociada");
+                }
+            }
+
+         
+            String token = jwtTokenUtil.generateToken(idParaToken, u.getNombre(), u.getRol().name());
             return ResponseEntity.ok(new TokenVO(token));
         } else {
             return ResponseEntity.status(401).body("Credenciales incorrectas");
         }
     }
+
+
+
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody UsuarioRequestVO usuarioVO) {
@@ -75,8 +93,10 @@ public class AuthController {
         }
 
         UsuarioResponseVO nuevo = usuarioService.save(usuarioVO);
-        String token = jwtTokenUtil.generateToken(nuevo.getNombre(), nuevo.getRol().name());
-        return ResponseEntity.ok(new TokenVO(token));
+        String token = jwtTokenUtil.generateToken(nuevo.getId(), nuevo.getNombre(), nuevo.getRol().name());
+        
+        return ResponseEntity.ok().build();
+
     }
 
 
