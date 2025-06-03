@@ -46,7 +46,7 @@ export class AuthService {
 
     return decodedPayload.role || null;
   }
-isEmpleado(): boolean {
+  isEmpleado(): boolean {
   const token = this.getToken();
   if (!token) return false;
 
@@ -75,5 +75,7 @@ isEmpleado(): boolean {
   }
 }
 
-  
+  getUserId(): number | null {
+    return null;
+  }
 }

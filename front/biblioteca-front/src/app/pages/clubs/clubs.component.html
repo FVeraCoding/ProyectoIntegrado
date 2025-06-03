@@ -1,0 +1,91 @@
+<div class="container">
+  <div class="title">
+    <h1>Bienvenido a la sección de Clubs</h1>
+  </div>
+
+  <div class="subtitle">
+    <p>Aquí puedes consultar, crear, editar y eliminar clubs organizados por
+      empleados</p>
+  </div>
+
+  <!-- Filtro de clubs -->
+  <div class="filtro-clubs">
+    <input [(ngModel)]="filtroNombre" (input)="filtrarClubs()"
+      placeholder="Buscar clubs por nombre" />
+  </div>
+
+  <!-- Botón para abrir modal de creación (solo EMPLEADOS) -->
+  <div class="crear-club-boton" *ngIf="esEmpleado">
+    <button (click)="abrirModalCrear()">Crear nuevo club</button>
+  </div>
+
+  <!-- Listado de clubs -->
+  <div class="clubs-grid">
+    <h2 class="section-title">Clubs registrados</h2>
+    <div class="clubs-container">
+      <div class="club-card" *ngFor="let club of clubsPaginados">
+        <div class="club-info">
+          <h3>{{ club.nombre }}</h3>
+          <p>{{ club.descripcion }}</p>
+          <span class="organizador">Organizador: {{
+            club.nombreEmpleadoOrganizador }}</span>
+          <span class="socios">Nº de socios: {{ club.sociosId.length }}</span>
+        </div>
+        <div class="club-actions" *ngIf="esEmpleado">
+          <button class="btn-edit" (click)="abrirEdicion(club)">Editar</button>
+          <button class="btn-delete"
+            (click)="eliminarClub(club.id!)">Eliminar</button>
+        </div>
+        <!-- Acción para socios: Unirse al club -->
+        <div class="club-actions"
+          *ngIf="!esEmpleado && !club.sociosId.includes(userId!)">
+          <button class="btn-unirse"
+            (click)="unirseAClub(club.id!)">Unirse</button>
+        </div>
+
+        <div class="ya-unido"
+          *ngIf="!esEmpleado && club.sociosId.includes(userId!)">
+          <span>Ya eres miembro</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Paginación -->
+  <div class="paginar">
+    <button class="boton-paginas" (click)="paginaAnterior()"
+      [disabled]="paginaActual === 1">Anterior</button>
+    <span class="pagina-info">Página {{ paginaActual }} de {{ totalPaginas
+      }}</span>
+    <button class="boton-paginas" (click)="paginaSiguiente()"
+      [disabled]="paginaActual === totalPaginas">Siguiente</button>
+  </div>
+
+  <!-- Modal de creación -->
+  <div class="modal-edicion" *ngIf="mostrarModalCrear">
+    <div class="modal-contenido">
+      <h2>Crear Club</h2>
+      <input [(ngModel)]="nuevoClub.nombre" placeholder="Nombre del club" />
+      <input [(ngModel)]="nuevoClub.descripcion" placeholder="Descripción" />
+      <input [(ngModel)]="nuevoClub.idEmpleadoOrganizador" type="number"
+        placeholder="ID del organizador" />
+
+      <button (click)="crearClub()">Crear</button>
+      <button (click)="cerrarModalCrear()">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- Modal de edición -->
+  <div class="modal-edicion" *ngIf="clubEditando as club">
+    <div class="modal-contenido">
+      <h2>Editar Club</h2>
+      <input [(ngModel)]="club.nombre" placeholder="Nombre del club" />
+      <input [(ngModel)]="club.descripcion" placeholder="Descripción" />
+      <input [(ngModel)]="club.idEmpleadoOrganizador" type="number"
+        placeholder="ID del organizador" />
+
+      <button (click)="guardarEdicion()">Guardar</button>
+      <button (click)="cerrarModalEdicion()">Cancelar</button>
+    </div>
+  </div>
+</div>
