@@ -11,6 +11,10 @@ public class AsistenciaId implements Serializable{
 	private Long idSocio;
 	private Long idEvento;
 	
+	
+	public AsistenciaId() {
+	}
+
 	public AsistenciaId(Long idSocio, Long idEvento) {
 		this.idSocio = idSocio;
 		this.idEvento = idEvento;

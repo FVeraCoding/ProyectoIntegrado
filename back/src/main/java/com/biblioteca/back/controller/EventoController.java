@@ -1,6 +1,7 @@
 package com.biblioteca.back.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,17 +15,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.biblioteca.back.service.EventoService;
+import com.biblioteca.back.service.SocioService;
 import com.biblioteca.back.vo.EventoVO;
+import com.biblioteca.back.vo.SocioVO;
 
 @RestController
 @RequestMapping("/evento")
 public class EventoController {
 
 	private final EventoService eventoService;
+	private final SocioService socioService;
 
-	public EventoController(EventoService eventoService) {
-		super();
+
+
+	public EventoController(EventoService eventoService, SocioService socioService) {
 		this.eventoService = eventoService;
+		this.socioService = socioService;
 	}
 
 	@GetMapping
@@ -64,6 +70,26 @@ public class EventoController {
 	public ResponseEntity<EventoVO> deleteEventoById(@PathVariable Long id) {
 		boolean borrada = eventoService.deleteEventoById(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
+	
+	@PutMapping("/asistencia")
+	public ResponseEntity<EventoVO> addAsistencia(@RequestBody Map<String, Long> ids) {
+	    Long idEvento = ids.get("idEvento");
+	    Long idSocio = ids.get("idSocio");
+
+	    if (idEvento == null || idSocio == null) {
+	        return ResponseEntity.badRequest().build();
+	    }
+
+	    EventoVO evento = eventoService.findById(idEvento);
+	    SocioVO socio = socioService.findById(idSocio); 
+
+	    EventoVO actualizado = eventoService.addAsistencia(evento, socio);
+	    if (actualizado != null) {
+	        return ResponseEntity.ok(actualizado);
+	    } else {
+	        return ResponseEntity.notFound().build();
+	    }
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,7 +37,7 @@ public class EventoEntity {
 	@JoinColumn (name = "idEmpleadoOrganizador")
 	private EmpleadoEntity empleadoOrganizador;
 	
-	@OneToMany(mappedBy="evento")
+	@OneToMany(mappedBy="evento", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
 	private List<AsistenciaEntity> listaAsistencia;
 
