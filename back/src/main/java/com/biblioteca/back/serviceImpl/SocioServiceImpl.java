@@ -38,7 +38,7 @@ public class SocioServiceImpl implements SocioService {
 
     @Override
     public SocioVO buscarPorIdUsuario(Long idUsuario) {
-        SocioEntity socio = socioRepository.findByUsuario_Id(idUsuario)
+        SocioEntity socio = socioRepository.findByUsuarioId(idUsuario)
             .orElseThrow(() -> new RuntimeException("No se encontró un socio para el usuario con ID: " + idUsuario));
 
         return socioConverter.toVO(socio);
@@ -83,7 +83,7 @@ public class SocioServiceImpl implements SocioService {
 
     @Override
     public void eliminarPorIdUsuario(Long idUsuario) {
-    	SocioEntity socio = socioRepository.findByUsuario_Id(idUsuario)
+    	SocioEntity socio = socioRepository.findByUsuarioId(idUsuario)
             .orElseThrow(() -> new RuntimeException("Socio no encontrado con ID de usuario: " + idUsuario));
         
         socioRepository.delete(socio);

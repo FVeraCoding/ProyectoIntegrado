@@ -38,7 +38,18 @@ public class EventoConverter {
 		vo.setFecha(entity.getFecha());
 		vo.setIdEmpleadoOrganizador(entity.getEmpleadoOrganizador().getId());
 		vo.setNombreEmpleadoOrganizador(entity.getEmpleadoOrganizador().getNombre());
-		vo.setNumeroAsistentes(entity.getListaAsistencia().size());
+		vo.setNumeroAsistentes(
+			    entity.getListaAsistencia() != null ? entity.getListaAsistencia().size() : 0
+			);
+		
+		if (entity.getListaAsistencia() != null) {
+		    vo.setIdAsistentes(
+		        entity.getListaAsistencia().stream()
+		            .map(a -> a.getId().getIdSocio())
+		            .toList()
+		    );
+		}
+
 		
 		return vo;
 	}

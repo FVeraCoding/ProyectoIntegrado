@@ -1,0 +1,94 @@
+<div class="container">
+    <div class="title">
+        <h1>Bienvenido a la sección de Eventos</h1>
+    </div>
+
+    <div class="subtitle">
+        <p>Aquí puedes consultar los eventos disponibles, registrarte o
+            gestionarlos si eres organizador</p>
+    </div>
+
+    <!-- Buscador -->
+    <div class="buscador-libros">
+        <input [(ngModel)]="filtroNombre" placeholder="Buscar eventos"
+            (input)="filtrarEventos()" />
+    </div>
+
+    <!-- Botón crear solo para empleados -->
+    <div class="acciones-empleado" *ngIf="esEmpleado">
+        <button (click)="abrirModalCrear()">Crear nuevo evento</button>
+    </div>
+
+    <!-- Lista de eventos -->
+    <div class="libros-grid">
+        <h2 class="section-title">Eventos disponibles</h2>
+        <div class="libros-container">
+            <div class="libro-card" *ngFor="let evento of eventosPaginados">
+                <h3>{{ evento.nombre }}</h3>
+                <p>{{ evento.descripcion }}</p>
+                <span class="anio">Fecha: {{ evento.fecha }}</span>
+                <p>Organizador: {{ evento.nombreEmpleadoOrganizador }}</p>
+                <p>Asistentes: {{ evento.numeroAsistentes }}</p>
+
+                <!-- Botones según rol -->
+                <div class="acciones">
+                    <button *ngIf="esEmpleado"
+                        (click)="abrirEdicion(evento)">Editar</button>
+                    <button *ngIf="esEmpleado"
+                        (click)="eliminarEvento(evento.id!)">Eliminar</button>
+                    <!-- Si es SOCIO y no está unido -->
+                    <button
+                        *ngIf="!esEmpleado && !evento.idAsistentes?.includes(userId!)"
+                        (click)="unirseAEvento(evento.id!)">
+                        Unirse
+                    </button>
+
+                    <!-- Si es SOCIO y ya está unido -->
+                    <span
+                        *ngIf="!esEmpleado && evento.idAsistentes?.includes(userId!)">
+                        Ya te has unido a este evento
+                    </span>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Paginación -->
+    <div class="paginar">
+        <button class="boton-paginas" (click)="paginaAnterior()">Atrás</button>
+        <button class="boton-paginas"
+            (click)="paginaSiguiente()">Adelante</button>
+    </div>
+
+    <!-- Modal de creación/edición -->
+    <div *ngIf="mostrarModalCrear || eventoEditando" class="modal-backdrop">
+        <div class="modal">
+            <h2>{{ eventoEditando ? 'Editar Evento' : 'Crear Evento' }}</h2>
+            <label>Nombre:</label>
+            <input *ngIf="eventoEditando" [(ngModel)]="eventoEditando.nombre" />
+            <input *ngIf="!eventoEditando" [(ngModel)]="nuevoEvento.nombre" />
+
+            <label>Descripción:</label>
+            <textarea *ngIf="eventoEditando"
+                [(ngModel)]="eventoEditando.descripcion"></textarea>
+            <textarea *ngIf="!eventoEditando"
+                [(ngModel)]="nuevoEvento.descripcion"></textarea>
+
+            <label>Fecha:</label>
+            <input type="date" *ngIf="eventoEditando"
+                [(ngModel)]="eventoEditando.fecha" />
+            <input type="date" *ngIf="!eventoEditando"
+                [(ngModel)]="nuevoEvento.fecha" />
+
+            <div class="acciones">
+                <button *ngIf="eventoEditando"
+                    (click)="guardarEdicion()">Guardar</button>
+                <button *ngIf="!eventoEditando"
+                    (click)="crearEvento()">Crear</button>
+                <button
+                    (click)="cerrarModalCrear(); cerrarModalEdicion()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>

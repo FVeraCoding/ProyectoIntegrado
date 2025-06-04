@@ -109,12 +109,6 @@ h1 {
           background-color: #8a451c;
         }
       }
-
-      span {
-        font-size: 1.1rem;
-        color: #555;
-        font-style: italic;
-      }
     }
   }
 }
@@ -168,7 +162,8 @@ h1 {
       color: #8b735b;
     }
 
-    input {
+    input,
+    textarea {
       width: 100%;
       padding: 0.6rem;
       font-size: 1.2rem;
@@ -197,3 +192,14 @@ h1 {
     }
   }
 }
+
+.acciones {
+  span {
+    font-size: 1.1rem;
+    color: #555;
+    font-style: italic;
+    margin-top: 0.5rem;
+    display: inline-block;
+  }
+}
+

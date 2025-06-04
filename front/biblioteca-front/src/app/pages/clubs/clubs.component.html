@@ -4,48 +4,36 @@
   </div>
 
   <div class="subtitle">
-    <p>Aquí puedes consultar, crear, editar y eliminar clubs organizados por
-      empleados</p>
+    <p>Aquí puedes consultar, crear, editar y eliminar clubs organizados por empleados</p>
   </div>
 
-  <!-- Filtro de clubs -->
-  <div class="filtro-clubs">
-    <input [(ngModel)]="filtroNombre" (input)="filtrarClubs()"
-      placeholder="Buscar clubs por nombre" />
+  <!-- Filtro -->
+  <div class="buscador-libros">
+    <input [(ngModel)]="filtroNombre" placeholder="Buscar clubs" (input)="filtrarClubs()" />
   </div>
 
-  <!-- Botón para abrir modal de creación (solo EMPLEADOS) -->
-  <div class="crear-club-boton" *ngIf="esEmpleado">
+  <!-- Botón crear -->
+  <div class="acciones-empleado" *ngIf="esEmpleado">
     <button (click)="abrirModalCrear()">Crear nuevo club</button>
   </div>
 
   <!-- Listado de clubs -->
-  <div class="clubs-grid">
+  <div class="libros-grid">
     <h2 class="section-title">Clubs registrados</h2>
-    <div class="clubs-container">
-      <div class="club-card" *ngFor="let club of clubsPaginados">
-        <div class="club-info">
-          <h3>{{ club.nombre }}</h3>
-          <p>{{ club.descripcion }}</p>
-          <span class="organizador">Organizador: {{
-            club.nombreEmpleadoOrganizador }}</span>
-          <span class="socios">Nº de socios: {{ club.sociosId.length }}</span>
-        </div>
-        <div class="club-actions" *ngIf="esEmpleado">
-          <button class="btn-edit" (click)="abrirEdicion(club)">Editar</button>
-          <button class="btn-delete"
-            (click)="eliminarClub(club.id!)">Eliminar</button>
-        </div>
-        <!-- Acción para socios: Unirse al club -->
-        <div class="club-actions"
-          *ngIf="!esEmpleado && !club.sociosId.includes(userId!)">
-          <button class="btn-unirse"
-            (click)="unirseAClub(club.id!)">Unirse</button>
-        </div>
+    <div class="libros-container">
+      <div class="libro-card" *ngFor="let club of clubsPaginados">
+        <h3>{{ club.nombre }}</h3>
+        <p>{{ club.descripcion }}</p>
+        <span class="anio">Organizador: {{ club.nombreEmpleadoOrganizador }}</span>
+        <p>Socios: {{ club.sociosId.length }}</p>
 
-        <div class="ya-unido"
-          *ngIf="!esEmpleado && club.sociosId.includes(userId!)">
-          <span>Ya eres miembro</span>
+        <div class="acciones">
+          <button *ngIf="esEmpleado" (click)="abrirEdicion(club)">Editar</button>
+          <button *ngIf="esEmpleado" (click)="eliminarClub(club.id!)">Eliminar</button>
+          <button *ngIf="!esEmpleado && !club.sociosId.includes(userId!)" (click)="unirseAClub(club.id!)">
+            Unirse
+          </button>
+          <span *ngIf="!esEmpleado && club.sociosId.includes(userId!)">Ya eres miembro</span>
         </div>
       </div>
     </div>
@@ -53,39 +41,28 @@
 
   <!-- Paginación -->
   <div class="paginar">
-    <button class="boton-paginas" (click)="paginaAnterior()"
-      [disabled]="paginaActual === 1">Anterior</button>
-    <span class="pagina-info">Página {{ paginaActual }} de {{ totalPaginas
-      }}</span>
-    <button class="boton-paginas" (click)="paginaSiguiente()"
-      [disabled]="paginaActual === totalPaginas">Siguiente</button>
+    <button class="boton-paginas" (click)="paginaAnterior()">Atrás</button>
+    <button class="boton-paginas" (click)="paginaSiguiente()">Adelante</button>
   </div>
 
-  <!-- Modal de creación -->
-  <div class="modal-edicion" *ngIf="mostrarModalCrear">
-    <div class="modal-contenido">
-      <h2>Crear Club</h2>
-      <input [(ngModel)]="nuevoClub.nombre" placeholder="Nombre del club" />
-      <input [(ngModel)]="nuevoClub.descripcion" placeholder="Descripción" />
-      <input [(ngModel)]="nuevoClub.idEmpleadoOrganizador" type="number"
-        placeholder="ID del organizador" />
+  <!-- Modal crear/editar -->
+  <div class="modal-backdrop" *ngIf="mostrarModalCrear || clubEditando">
+    <div class="modal">
+      <h2>{{ clubEditando ? 'Editar Club' : 'Crear Club' }}</h2>
 
-      <button (click)="crearClub()">Crear</button>
-      <button (click)="cerrarModalCrear()">Cancelar</button>
-    </div>
-  </div>
+      <label>Nombre:</label>
+      <input *ngIf="clubEditando" [(ngModel)]="clubEditando.nombre" />
+      <input *ngIf="!clubEditando" [(ngModel)]="nuevoClub.nombre" />
 
-  <!-- Modal de edición -->
-  <div class="modal-edicion" *ngIf="clubEditando as club">
-    <div class="modal-contenido">
-      <h2>Editar Club</h2>
-      <input [(ngModel)]="club.nombre" placeholder="Nombre del club" />
-      <input [(ngModel)]="club.descripcion" placeholder="Descripción" />
-      <input [(ngModel)]="club.idEmpleadoOrganizador" type="number"
-        placeholder="ID del organizador" />
+      <label>Descripción:</label>
+      <input *ngIf="clubEditando" [(ngModel)]="clubEditando.descripcion" />
+      <input *ngIf="!clubEditando" [(ngModel)]="nuevoClub.descripcion" />
 
-      <button (click)="guardarEdicion()">Guardar</button>
-      <button (click)="cerrarModalEdicion()">Cancelar</button>
+      <div class="acciones">
+        <button *ngIf="clubEditando" (click)="guardarEdicion()">Guardar</button>
+        <button *ngIf="!clubEditando" (click)="crearClub()">Crear</button>
+        <button (click)="cerrarModalCrear(); cerrarModalEdicion()">Cancelar</button>
+      </div>
     </div>
   </div>
 </div>
