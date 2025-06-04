@@ -4,12 +4,18 @@
   </div>
 
   <div class="subtitle">
-    <p>Aquí puedes consultar, crear, editar y eliminar clubs organizados por empleados</p>
+    <p>Aquí puedes consultar y unirte a los clubs de lectura de la biblioteca</p>
+  </div>
+
+  <div class="imagenEvento">
+    <img class=imagen src="images/clubs-banner.png"
+      alt="Imagen de clubs" />
   </div>
 
   <!-- Filtro -->
   <div class="buscador-libros">
-    <input [(ngModel)]="filtroNombre" placeholder="Buscar clubs" (input)="filtrarClubs()" />
+    <input [(ngModel)]="filtroNombre" placeholder="Buscar clubs"
+      (input)="filtrarClubs()" />
   </div>
 
   <!-- Botón crear -->
@@ -24,16 +30,26 @@
       <div class="libro-card" *ngFor="let club of clubsPaginados">
         <h3>{{ club.nombre }}</h3>
         <p>{{ club.descripcion }}</p>
-        <span class="anio">Organizador: {{ club.nombreEmpleadoOrganizador }}</span>
-        <p>Socios: {{ club.sociosId.length }}</p>
+        <div class="organizador-row">
+          <div class="organizador-avatar">
+            {{ club.nombreEmpleadoOrganizador?.charAt(0) || '' }}
+          </div>
+          <span class="anio">Organizador: {{ club.nombreEmpleadoOrganizador
+            }}</span>
+        </div>
+        <span class="socios-badge">Socios: {{ club.sociosId.length }}</span>
 
         <div class="acciones">
-          <button *ngIf="esEmpleado" (click)="abrirEdicion(club)">Editar</button>
-          <button *ngIf="esEmpleado" (click)="eliminarClub(club.id!)">Eliminar</button>
-          <button *ngIf="!esEmpleado && !club.sociosId.includes(userId!)" (click)="unirseAClub(club.id!)">
+          <button *ngIf="esEmpleado"
+            (click)="abrirEdicion(club)">Editar</button>
+          <button *ngIf="esEmpleado"
+            (click)="eliminarClub(club.id!)">Eliminar</button>
+          <button *ngIf="!esEmpleado && !club.sociosId.includes(userId!)"
+            (click)="unirseAClub(club.id!)">
             Unirse
           </button>
-          <span *ngIf="!esEmpleado && club.sociosId.includes(userId!)">Ya eres miembro</span>
+          <span *ngIf="!esEmpleado && club.sociosId.includes(userId!)">Ya eres
+            miembro</span>
         </div>
       </div>
     </div>
@@ -61,7 +77,8 @@
       <div class="acciones">
         <button *ngIf="clubEditando" (click)="guardarEdicion()">Guardar</button>
         <button *ngIf="!clubEditando" (click)="crearClub()">Crear</button>
-        <button (click)="cerrarModalCrear(); cerrarModalEdicion()">Cancelar</button>
+        <button
+          (click)="cerrarModalCrear(); cerrarModalEdicion()">Cancelar</button>
       </div>
     </div>
   </div>

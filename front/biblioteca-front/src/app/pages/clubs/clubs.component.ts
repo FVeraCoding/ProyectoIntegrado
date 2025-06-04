@@ -31,7 +31,7 @@ export class ClubComponent implements OnInit {
   mostrarModalCrear: boolean = false;
 
   paginaActual: number = 1;
-  elementosPorPagina: number = 5;
+  elementosPorPagina: number = 6;
   totalPaginas: number = 1;
 
   constructor(private clubService: ClubService) { }

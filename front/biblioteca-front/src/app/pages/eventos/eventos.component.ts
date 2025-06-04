@@ -44,7 +44,7 @@ mostrarModal = false;
 
   filtroNombre: string = '';
   paginaActual: number = 1;
-  elementosPorPagina: number = 5;
+  elementosPorPagina: number = 6;
   totalPaginas: number = 1;
 
   constructor(private eventoService: EventoService, private empleadoService: EmpleadoService) { }

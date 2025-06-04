@@ -50,6 +50,8 @@ h1 {
 .libros-grid {
   margin-top: 5rem;
   margin-bottom: 4rem;
+  margin-left: 5rem;
+  margin-right: 5rem;
   text-align: center;
 
   .section-title {
@@ -70,51 +72,114 @@ h1 {
     background-color: white;
     border-radius: 1rem;
     padding: 1rem;
+    min-height: 130px;
+    gap: 1rem;
+
+    // Mejoras visuales similares a eventos
+    background: linear-gradient(135deg, #fff7f0 60%, #f3e3d3 100%);
+    box-shadow: 0 4px 24px rgba(156, 69, 7, 0.08), 0 1.5px 6px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 
     &:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.2);
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 8px 32px rgba(156, 69, 7, 0.18), 0 2px 8px rgba(0, 0, 0, 0.08);
     }
 
     h3 {
-      font-size: 1.4rem;
-      margin: 0.5rem 0;
+      font-size: 1.6rem;
+      margin: 0.5rem 0 0.2rem 0;
       color: #a15a27;
+      font-weight: 700;
+      letter-spacing: 0.5px;
     }
 
     p {
-      font-size: 1.2rem;
+      font-size: 1.18rem;
       color: #8b735b;
-      margin: 0.3rem 0;
+      margin: 0.2rem 0;
+      line-height: 1.4;
     }
 
     .anio {
-      font-size: 1rem;
+      font-size: 1.05rem;
       color: #c89e80;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .organizador-row {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin-bottom: 0.2rem;
+
+      .organizador-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #f3e3d3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: #a15a27;
+        font-weight: bold;
+        box-shadow: 0 1px 4px rgba(156, 69, 7, 0.08);
+      }
+    }
+
+    .socios-badge {
+      display: inline-block;
+      background: #ffe0b2;
+      color: #a15a27;
+      font-size: 1.05rem;
+      font-weight: 600;
+      border-radius: 1rem;
+      padding: 0.2rem 0.9rem;
+      margin-bottom: 0.5rem;
+      margin-left: 0.2rem;
+      box-shadow: 0 1px 4px rgba(156, 69, 7, 0.08);
     }
 
     .acciones {
-      margin-top: 1rem;
+      margin-top: auto;
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+      justify-content: flex-start;
 
       button {
-        margin: 0.2rem;
-        padding: 0.5rem 1rem;
-        font-size: 1.2rem;
-        background-color: #a15a27;
+        margin: 0.1rem 0.2rem 0.1rem 0;
+        padding: 0.5rem 1.2rem;
+        font-size: 1.13rem;
+        background: linear-gradient(90deg, #a15a27 80%, #c89e80 100%);
         color: white;
         border: none;
-        border-radius: 0.4rem;
+        border-radius: 0.5rem;
         cursor: pointer;
+        font-weight: 500;
+        box-shadow: 0 1px 4px rgba(156, 69, 7, 0.08);
+        transition: background 0.2s, box-shadow 0.2s;
+        outline: none;
 
         &:hover {
-          background-color: #8a451c;
+          background: linear-gradient(90deg, #8a451c 80%, #c89e80 100%);
+          box-shadow: 0 2px 8px rgba(156, 69, 7, 0.18);
         }
       }
 
       span {
-        font-size: 1.1rem;
-        color: #555;
+        font-size: 1.08rem;
+        color: #a15a27;
         font-style: italic;
+        margin-left: 0.5rem;
+        font-weight: 500;
       }
     }
   }
@@ -197,4 +262,46 @@ h1 {
       }
     }
   }
+}
+
+// Responsive improvements
+@media (max-width: 900px) {
+  .libros-grid .libros-container {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .libros-grid .libro-card {
+    padding: 1rem 0.5rem 0.7rem 0.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .libros-grid .libros-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .libros-grid .libro-card {
+    min-height: 120px;
+    padding: 0.6rem 0.2rem 0.5rem 0.2rem;
+  }
+}
+
+.imagenEvento {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3rem auto;
+  padding: 0 1rem;
+  width: 100%;
+  max-width: 100%;
+}
+
+.imagenEvento .imagen {
+  width: 100%;
+  max-width: 850px;
+  height: auto;
+  border-radius: 1rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }

@@ -4,9 +4,15 @@
     </div>
 
     <div class="subtitle">
-        <p>Aquí puedes consultar los eventos disponibles, registrarte o
-            gestionarlos si eres organizador</p>
+        <p>Aquí puedes consultar los eventos disponibles y registrar tu
+            asistencia a ellos</p>
     </div>
+
+    <div class="imagenEvento">
+            <img class= imagen src="images/eventos-banner.png"
+        alt="Imagen de eventos" />
+    </div>
+    
 
     <!-- Buscador -->
     <div class="buscador-libros">
@@ -27,8 +33,15 @@
                 <h3>{{ evento.nombre }}</h3>
                 <p>{{ evento.descripcion }}</p>
                 <span class="anio">Fecha: {{ evento.fecha }}</span>
-                <p>Organizador: {{ evento.nombreEmpleadoOrganizador }}</p>
-                <p>Asistentes: {{ evento.numeroAsistentes }}</p>
+                <div class="organizador-row">
+                    <div class="organizador-avatar">
+                        {{ evento.nombreEmpleadoOrganizador?.charAt(0) || '' }}
+                    </div>
+                    <p style="margin: 0;">Organizador: {{
+                        evento.nombreEmpleadoOrganizador }}</p>
+                </div>
+                <span class="asistentes-badge">Asistentes: {{
+                    evento.numeroAsistentes }}</span>
 
                 <!-- Botones según rol -->
                 <div class="acciones">
@@ -36,8 +49,9 @@
                         (click)="abrirEdicion(evento)">Editar</button>
                     <button *ngIf="esEmpleado"
                         (click)="eliminarEvento(evento.id!)">Eliminar</button>
-                    <button *ngIf="evento.id !== undefined && esEmpleado" (click)="verAsistentes(evento.id!)">Ver asistentes</button>
-
+                    <button *ngIf="evento.id !== undefined && esEmpleado"
+                        (click)="verAsistentes(evento.id!)">Ver
+                        asistentes</button>
 
                     <!-- Si es SOCIO y no está unido -->
                     <button
