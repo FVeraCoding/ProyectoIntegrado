@@ -5,6 +5,7 @@ import { EventoService } from '../../core/services/evento.service';
 import { Evento } from '../../core/models/evento.model';
 import { jwtDecode } from 'jwt-decode';
 import { EmpleadoService } from '../../core/services/empleado.service';
+import { Asistente } from '../../core/models/asistente.model';
 
 interface JwtPayload {
   sub: string;
@@ -24,6 +25,8 @@ export class EventoComponent implements OnInit {
   eventosFiltrados: Evento[] = [];
   eventosPaginados: Evento[] = [];
   idEmpleado: number | null | undefined = null;
+  asistentes: Asistente[] = [];
+mostrarModal = false;
 
 
   nuevoEvento: Evento = {
@@ -168,6 +171,22 @@ export class EventoComponent implements OnInit {
       this.filtrarEventos(); 
     }
   });
+}
+
+verAsistentes(idEvento: number): void {
+  this.eventoService.getAsistentesEvento(idEvento).subscribe({
+    next: (data) => {
+      this.asistentes = data;
+      this.mostrarModal = true;
+    },
+    error: () => {
+      alert('Error al cargar los asistentes');
+    }
+  });
+}
+
+cerrarModal(): void {
+  this.mostrarModal = false;
 }
 
 }

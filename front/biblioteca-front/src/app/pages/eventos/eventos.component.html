@@ -36,6 +36,9 @@
                         (click)="abrirEdicion(evento)">Editar</button>
                     <button *ngIf="esEmpleado"
                         (click)="eliminarEvento(evento.id!)">Eliminar</button>
+                    <button *ngIf="evento.id !== undefined && esEmpleado" (click)="verAsistentes(evento.id!)">Ver asistentes</button>
+
+
                     <!-- Si es SOCIO y no está unido -->
                     <button
                         *ngIf="!esEmpleado && !evento.idAsistentes?.includes(userId!)"
@@ -91,4 +94,24 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal de lista de asistentes. -->
+    <div class="modal-backdrop" *ngIf="mostrarModal">
+        <div class="modal">
+            <h2>Asistentes al evento</h2>
+
+            <ul *ngIf="asistentes.length > 0; else noAsistentes">
+                <li *ngFor="let asistente of asistentes">
+                    {{ asistente.nombre }}
+                </li>
+            </ul>
+
+            <ng-template #noAsistentes>
+                <p>No hay asistentes registrados.</p>
+            </ng-template>
+
+            <button class="cerrar" (click)="cerrarModal()">Cerrar</button>
+        </div>
+    </div>
+
 </div>

@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Evento } from '../models/evento.model'; 
+import { Evento } from '../models/evento.model';
+import { Asistente } from '../models/asistente.model';
 
 @Injectable({ providedIn: 'root' })
 export class EventoService {
   private baseUrl = 'http://localhost:8080/evento';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getAll(): Observable<Evento[]> {
     return this.http.get<Evento[]>(this.baseUrl);
@@ -36,4 +37,10 @@ export class EventoService {
   addAsistencia(idEvento: number, idSocio: number): Observable<Evento> {
     return this.http.put<Evento>(`${this.baseUrl}/asistencia`, { idEvento, idSocio });
   }
+
+  getAsistentesEvento(idEvento: number): Observable<Asistente[]> {
+    return this.http.get<Asistente[]>(`${this.baseUrl}/${idEvento}/asistentes`);
+  }
+
+
 }

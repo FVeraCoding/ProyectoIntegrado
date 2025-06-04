@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.biblioteca.back.service.EventoService;
 import com.biblioteca.back.service.SocioService;
+import com.biblioteca.back.vo.AsistenteVO;
 import com.biblioteca.back.vo.EventoVO;
 import com.biblioteca.back.vo.SocioVO;
 
@@ -90,6 +91,11 @@ public class EventoController {
 	    } else {
 	        return ResponseEntity.notFound().build();
 	    }
+	}
+	
+	@GetMapping("/{id}/asistentes")
+	public List<AsistenteVO> obtenerAsistentes(@PathVariable Long id) {
+	    return eventoService.obtenerAsistentesDelEvento(id);
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.biblioteca.back.serviceImpl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -11,9 +12,11 @@ import com.biblioteca.back.converter.SocioConverter;
 import com.biblioteca.back.entity.AsistenciaEntity;
 import com.biblioteca.back.entity.EventoEntity;
 import com.biblioteca.back.entity.SocioEntity;
+import com.biblioteca.back.entity.UsuarioEntity;
 import com.biblioteca.back.repository.EventoRepository;
 import com.biblioteca.back.repository.SocioRepository;
 import com.biblioteca.back.service.EventoService;
+import com.biblioteca.back.vo.AsistenteVO;
 import com.biblioteca.back.vo.EventoVO;
 import com.biblioteca.back.vo.SocioVO;
 import com.biblioteca.backend.id.AsistenciaId;
@@ -122,6 +125,31 @@ public class EventoServiceImpl implements EventoService{
 
 	    return vo;
 	}
+	
+	@Override
+	public List<AsistenteVO> obtenerAsistentesDelEvento(Long idEvento) {
+	    EventoEntity evento = eventoRepository.findById(idEvento)
+	        .orElseThrow(() -> new RuntimeException("Evento no encontrado con ID: " + idEvento));
+
+	    if (evento.getListaAsistencia().isEmpty()) {
+	        System.out.println("El evento no tiene asistentes.");
+	    }
+
+	    return evento.getListaAsistencia().stream()
+	        .map(asistencia -> {
+	            SocioEntity socio = asistencia.getSocio();
+	            if (socio == null) {
+	                System.out.println("¡Atención! Hay una asistencia sin socio");
+	                return null;
+	            }
+	            UsuarioEntity usuario = socio.getUsuario();
+	            return new AsistenteVO(socio.getId(), usuario.getNombre());
+	        })
+	        .filter(vo -> vo != null)
+	        .collect(Collectors.toList());
+	}
+
+
 
 
 
