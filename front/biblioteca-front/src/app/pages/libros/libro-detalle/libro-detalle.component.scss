@@ -87,6 +87,8 @@
       text-align: center;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       box-shadow: 0 0.2rem 0.6rem rgba(0, 0, 0, 0.1);
+      display: flex;
+
 
       &:hover {
         transform: scale(1.05);
@@ -109,8 +111,8 @@
         margin: 0.4rem 0;
       }
 
-      a{
-                text-decoration: none;
+      a {
+        text-decoration: none;
 
       }
     }
@@ -123,4 +125,21 @@
   font-size: 1.6rem;
   margin-top: 4rem;
   color: #a15a27;
+}
+
+.botonReserva{
+  margin-top: 1rem;
+        padding: 0.5rem 0.5rem;
+        font-size: 1.2rem;
+        background-color: #a15a27;
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        width: 20%;
+        
+
+        &:hover {
+          background-color: #8a451c;
+        }
 }

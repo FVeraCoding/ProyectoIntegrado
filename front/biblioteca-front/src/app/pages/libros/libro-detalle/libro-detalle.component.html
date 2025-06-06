@@ -15,7 +15,7 @@
     <p *ngIf="libro.isbn"><strong>ISBN:</strong> {{ libro.isbn }}</p>
     <div class="ejemplaresDisponibles">
       <h4>Ejemplares disponibles: {{ejemplaresRelacionados.length}}</h4>
-      <button (click)="reservarEjemplar()">Reservar</button>
+      <button class="botonReserva" (click)="reservarEjemplar()">Reservar</button>
     </div>
 
   </div>
