@@ -3,6 +3,7 @@ package com.biblioteca.back.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.biblioteca.back.service.LibroService;
 import com.biblioteca.back.vo.LibroVO;
 
+import io.jsonwebtoken.io.IOException;
+import jakarta.servlet.http.HttpServletRequest;
+
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/libros")
 public class LibroController {
@@ -47,7 +52,7 @@ public class LibroController {
         }
         return ResponseEntity.ok(libro);
     }
-
+    
 }
 
     

@@ -8,5 +8,7 @@ export interface Libro {
     anioPublicacion?: number;
     imagenUrl?: string;
     descripcion?: string; 
+
+     ejemplares?: any[];
   }
   

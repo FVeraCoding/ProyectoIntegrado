@@ -1,5 +1,6 @@
 package com.biblioteca.back.vo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LibroVO {
@@ -13,7 +14,7 @@ public class LibroVO {
     private Integer anioPublicacion;
     private String imagenUrl;
     private String descripcion;
-    private List<EjemplarVO> ejemplares; 
+    private List<EjemplarVO> ejemplares = new ArrayList();
 
 
     public LibroVO() {

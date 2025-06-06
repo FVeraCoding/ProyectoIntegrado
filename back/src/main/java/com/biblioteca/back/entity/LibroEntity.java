@@ -1,9 +1,9 @@
 package com.biblioteca.back.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,7 +30,7 @@ public class LibroEntity {
 
        
     @OneToMany(mappedBy = "libro", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<EjemplarEntity> ejemplares;
+    private List<EjemplarEntity> ejemplares = new ArrayList<>();
     
 	public LibroEntity() {
 		

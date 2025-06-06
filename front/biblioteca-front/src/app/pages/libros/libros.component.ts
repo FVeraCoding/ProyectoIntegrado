@@ -54,18 +54,23 @@ export class LibrosComponent implements OnInit {
   }
 
 
-  addBook(libro: Libro): void {
-    this.librosService.guardarLibro(libro).subscribe({
-      next: (libroGuardado: Libro) => {
-        this.librosDestacados.push(libroGuardado);
-        this.notificationService.show(`Libro "${libroGuardado.titulo}" añadido a la biblioteca.`, 'success');
-      },
-      error: (error: any) => {
-        console.error('Error añadiendo libro:', error);
-        this.notificationService.show('Error al añadir el libro.', 'error');
-      }
-    });
-  }
+ addBook(libro: Libro): void {
+  const libroClonado = { ...libro } as any;
+  delete libroClonado.ejemplares;
+
+  this.librosService.guardarLibro(libroClonado).subscribe({
+    next: (libroGuardado: Libro) => {
+      this.librosDestacados.push(libroGuardado);
+      this.notificationService.show(`Libro "${libroGuardado.titulo}" añadido a la biblioteca.`, 'success');
+    },
+    error: (error) => {
+      console.error('Error al añadir el libro:', error);
+      this.notificationService.show('Error al añadir el libro.', 'error');
+    }
+  });
+}
+
+
 
   isEmpleado(): boolean {
     return this.authService.isEmpleado();

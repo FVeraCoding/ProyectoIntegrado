@@ -27,5 +27,5 @@ export class LibrosService {
   getLibroPorId(id: number): Observable<Libro> {
     return this.http.get<Libro>(`${this.baseUrl}/${id}`);
   }
-  
+ 
 }

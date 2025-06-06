@@ -3,6 +3,7 @@ package com.biblioteca.back.converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.biblioteca.back.controller.ReservaController;
 import com.biblioteca.back.entity.EjemplarEntity;
 import com.biblioteca.back.entity.LibroEntity;
 import com.biblioteca.back.repository.LibroRepository;
@@ -10,13 +11,16 @@ import com.biblioteca.back.vo.EjemplarVO;
 
 @Component
 public class EjemplarConverter {
-	
-	private LibroRepository libroRepo;
 
-	@Autowired
-	public EjemplarConverter(LibroRepository repo) {
-		this.libroRepo = repo;
-	}
+    private final LibroRepository libroRepo;
+    private final ReservaConverter reservaConverter;
+
+    @Autowired
+    public EjemplarConverter(LibroRepository repo, ReservaConverter reservaConverter) {
+        this.libroRepo = repo;
+        this.reservaConverter = reservaConverter;
+    }
+
 	
 	public EjemplarVO toVO(EjemplarEntity entity) {
 		
@@ -28,7 +32,11 @@ public class EjemplarConverter {
 			
 			vo.setId(entity.getId());
 			vo.setIdLibro(entity.getId());
-			vo.setReservas(entity.getReservasEjemplar());
+			vo.setReservas(
+				    entity.getReservasEjemplar().stream()
+				        .map(reservaConverter::toVO)
+				        .toList()
+				);
 			
 			return vo;
 		}
@@ -52,8 +60,11 @@ public class EjemplarConverter {
 			entity.setId(vo.getId());
 			entity.setReservado(vo.isReservado());
 			entity.setLibro(libroAsociado);
-			entity.setReservasEjemplar(vo.getReservas());
-			
+			entity.setReservasEjemplar(
+				    vo.getReservas().stream()
+				        .map(reservaConverter::toEntity)
+				        .toList()
+				);			
 			return entity;
 		}
 	}

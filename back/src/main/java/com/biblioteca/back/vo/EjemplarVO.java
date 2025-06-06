@@ -10,7 +10,7 @@ public class EjemplarVO {
 	private Long id;
 	private boolean reservado;
 	private Long idLibro;
-	private List<ReservaEntity> reservas;
+	private List<ReservaVO> reservas;
 	
 	public EjemplarVO(boolean reservado) {
 		this.reservado = reservado;
@@ -40,11 +40,11 @@ public class EjemplarVO {
 		this.idLibro = idLibro;
 	}
 
-	public List<ReservaEntity> getReservas() {
+	public List<ReservaVO> getReservas() {
 		return reservas;
 	}
 
-	public void setReservas(List<ReservaEntity> reservas) {
+	public void setReservas(List<ReservaVO> reservas) {
 		this.reservas = reservas;
 	}
 	
