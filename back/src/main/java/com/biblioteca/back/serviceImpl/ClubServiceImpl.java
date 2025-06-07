@@ -115,6 +115,21 @@ public class ClubServiceImpl implements ClubService{
 		
 		return actualizado;
 	}
+
+
+	@Override
+	public ClubVO retirarSocio(Long idClub, Long idSocio) {
+	    ClubEntity club = repo.findById(idClub).orElse(null);
+	    SocioEntity socio = socioRepo.findById(idSocio).orElse(null);
+
+
+	    if (club == null || socio == null) return null;
+
+	    boolean eliminado = club.getSocios().removeIf(s -> s.getId().equals(socio.getId()));
+
+	    ClubEntity actualizado = repo.save(club);
+	    return converter.toVO(actualizado);
+	}
 	
 	
 }

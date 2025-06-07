@@ -4,18 +4,19 @@
   </div>
 
   <div class="subtitle">
-    <p>Aquí puedes consultar y unirte a los clubs de lectura de la biblioteca</p>
+    <p>Aquí puedes consultar y unirte a los clubs de lectura de la
+      biblioteca</p>
   </div>
 
-   <div class="imagenEvento">
-  <div class="slider">
-    <div class="slides">
-      <img src="images/club1.png" alt="Club 1" />
-      <img src="images/club2.jpg" alt="Club 2" />
-      <img src="images/club3.jpg" alt="Club 3" />
+  <div class="imagenEvento">
+    <div class="slider">
+      <div class="slides">
+        <img src="images/club1.png" alt="Club 1" />
+        <img src="images/club2.jpg" alt="Club 2" />
+        <img src="images/club3.jpg" alt="Club 3" />
+      </div>
     </div>
   </div>
-</div>
 
   <!-- Filtro -->
   <div class="buscador-libros">
@@ -49,12 +50,19 @@
             (click)="abrirEdicion(club)">Editar</button>
           <button *ngIf="esEmpleado"
             (click)="eliminarClub(club.id!)">Eliminar</button>
-          <button *ngIf="!esEmpleado && !club.sociosId.includes(userId!)"
+          <!-- Si es SOCIO y NO está unido -->
+          <button
+            *ngIf="!esEmpleado && !club.sociosId.includes(userId!)"
             (click)="unirseAClub(club.id!)">
             Unirse
           </button>
-          <span *ngIf="!esEmpleado && club.sociosId.includes(userId!)">Ya eres
-            miembro</span>
+
+          <!-- Si es SOCIO y ya está unido -->
+          <button
+            *ngIf="!esEmpleado && club.sociosId.includes(userId!)"
+            (click)="onRetirarSocioClub(club.id!, userId!)">
+            Salir del club
+          </button>
         </div>
       </div>
     </div>

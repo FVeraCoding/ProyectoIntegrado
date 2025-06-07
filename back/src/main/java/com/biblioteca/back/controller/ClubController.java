@@ -83,6 +83,13 @@ public class ClubController {
 				
 	}
 	
+	@DeleteMapping("/{idClub}/socio/{idSocio}")
+	public ResponseEntity<ClubVO> retirarSocio(@PathVariable Long idClub, @PathVariable Long idSocio) {
+	    ClubVO actualizado = service.retirarSocio(idClub, idSocio);
+	    return actualizado != null ? ResponseEntity.ok(actualizado) : ResponseEntity.notFound().build();
+	}
+
+	
 	
 	
 }

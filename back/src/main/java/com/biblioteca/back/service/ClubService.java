@@ -14,5 +14,7 @@ public interface ClubService {
 	ClubVO updateClub(ClubVO vo);
 	List<ClubVO> findAll();
 	ClubVO addSocio(Long idClub, Long idSocio);
+	ClubVO retirarSocio(Long idClub, Long idSocio);
+
 	
 }

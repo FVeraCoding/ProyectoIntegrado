@@ -4,6 +4,7 @@ import { Club } from '../../core/models/clubs.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { jwtDecode } from 'jwt-decode';
+import { EmpleadoService } from '../../core/services/empleado.service';
 
 interface JwtPayload {
   sub: string;
@@ -34,10 +35,17 @@ export class ClubComponent implements OnInit {
   elementosPorPagina: number = 6;
   totalPaginas: number = 1;
 
-  constructor(private clubService: ClubService) { }
+  constructor(private clubService: ClubService, private empleadoService: EmpleadoService) { }
 
   ngOnInit(): void {
     this.obtenerRolDesdeToken();
+
+    if (this.esEmpleado && this.userId) {
+    this.empleadoService.getEmpleadoByIdUsuario(this.userId).subscribe(empleado => {
+      this.nuevoClub.idEmpleadoOrganizador = empleado.id!;
+    });
+  }
+
     this.cargarClubs();
   }
 
@@ -66,13 +74,21 @@ export class ClubComponent implements OnInit {
     });
   }
 
-  crearClub(): void {
-    this.clubService.addClub(this.nuevoClub).subscribe(() => {
-      this.nuevoClub = { nombre: '', descripcion: '', idEmpleadoOrganizador: 0, sociosId: [] };
-      this.mostrarModalCrear = false;
-      this.cargarClubs();
-    });
-  }
+crearClub(): void {
+  if (!this.nuevoClub.idEmpleadoOrganizador) return; // Verificamos que esté asignado correctamente
+
+  this.clubService.addClub(this.nuevoClub).subscribe(() => {
+    this.nuevoClub = {
+      nombre: '',
+      descripcion: '',
+      idEmpleadoOrganizador: this.nuevoClub.idEmpleadoOrganizador, // mantener el organizador
+      sociosId: []
+    };
+    this.mostrarModalCrear = false;
+    this.cargarClubs();
+  });
+}
+
 
   eliminarClub(id: number): void {
     if (confirm('¿Estás seguro de eliminar este club?')) {
@@ -139,5 +155,20 @@ export class ClubComponent implements OnInit {
     });
   }
 
+
+  onRetirarSocioClub(idClub: number, idSocio: number): void {
+  this.clubService.retirarSocioDelClub(idClub, idSocio).subscribe({
+    next: (clubActualizado) => {
+      const index = this.clubs.findIndex(c => c.id === idClub); // ← corregido
+      if (index !== -1) {
+        this.clubs[index] = clubActualizado;
+        this.filtrarClubs(); // recarga paginación
+      }
+    },
+    error: (err) => {
+      console.error('Error al retirar socio del club:', err);
+    }
+  });
+}
 
 }

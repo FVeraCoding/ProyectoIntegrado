@@ -38,4 +38,8 @@ export class ClubService {
     return this.http.delete<void>(`${this.apiUrl}/${idClub}`);
   }
 
+  retirarSocioDelClub(idClub: number, idSocio: number): Observable<Club> {
+  return this.http.delete<Club>(`${this.apiUrl}/${idClub}/socio/${idSocio}`);
+}
+
 }
