@@ -337,7 +337,7 @@ h1 {
 .slider {
   width: 100%;
   max-width: 700px;
-  aspect-ratio: 16 / 9; /* ✅ mantiene proporción */
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   border-radius: 1rem;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
@@ -346,7 +346,7 @@ h1 {
 
 .slides {
   display: flex;
-  width: calc(700px * 3); /* ✅ ajustado al número de imágenes */
+  width: calc(700px * 3);
   height: 400px;
   animation: slideAnim 18s ease-in-out infinite;
 }
@@ -355,7 +355,7 @@ h1 {
 .slides img {
   width: 700px;
   height: 400px;
-  object-fit: cover; /* ✅ mantiene proporciones, recorta si es necesario */
+  object-fit: cover; 
     flex-shrink: 0; 
 }
 @keyframes slideAnim {

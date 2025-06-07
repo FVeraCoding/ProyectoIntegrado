@@ -42,5 +42,11 @@ export class EventoService {
     return this.http.get<Asistente[]>(`${this.baseUrl}/${idEvento}/asistentes`);
   }
 
+   retirarAsistencia(idEvento: number, idSocio: number): Observable<Evento> {
+     return this.http.request<Evento>('delete', `${this.baseUrl}/asistencia`, {
+    body: { idEvento, idSocio }
+  });
+  }
+
 
 }

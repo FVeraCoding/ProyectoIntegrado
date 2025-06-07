@@ -16,5 +16,6 @@ public interface EventoService {
 	EventoVO updateEvento(EventoVO evento);
 	EventoVO addAsistencia(EventoVO evento, SocioVO socio);
 	List<AsistenteVO> obtenerAsistentesDelEvento(Long idEvento);
+	EventoVO retirarAsistencia(EventoVO eventoVO, SocioVO socioVO);
 	
 }

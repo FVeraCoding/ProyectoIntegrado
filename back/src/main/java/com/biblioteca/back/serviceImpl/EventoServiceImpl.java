@@ -149,6 +149,24 @@ public class EventoServiceImpl implements EventoService{
 	        .collect(Collectors.toList());
 	}
 
+	@Override
+	public EventoVO retirarAsistencia(EventoVO eventoVO, SocioVO socioVO) {
+	    EventoEntity evento = eventoRepository.findById(eventoVO.getId()).orElse(null);
+	    if (evento == null) return null;
+
+	    SocioEntity socio = socioRepository.findById(socioVO.getId()).orElse(null);
+	    if (socio == null) return null;
+
+	    evento.getListaAsistencia().removeIf(asistencia ->
+	        asistencia.getSocio().getId().equals(socio.getId())
+	    );
+
+	    EventoEntity actualizado = eventoRepository.save(evento);
+
+	    return eventoConverter.toVO(actualizado);
+	}
+
+
 
 
 

@@ -9,16 +9,14 @@
     </div>
 
     <div class="imagenEvento">
-  <div class="slider">
-    <div class="slides">
-      <img src="images/evento1.png" alt="Evento 1" />
-      <img src="images/evento2.jpg" alt="Evento 2" />
-      <img src="images/evento3.jpeg" alt="Evento 3" />
+        <div class="slider">
+            <div class="slides">
+                <img src="images/evento1.png" alt="Evento 1" />
+                <img src="images/evento2.jpg" alt="Evento 2" />
+                <img src="images/evento3.jpeg" alt="Evento 3" />
+            </div>
+        </div>
     </div>
-  </div>
-</div>
-
-    
 
     <!-- Buscador -->
     <div class="buscador-libros">
@@ -67,10 +65,12 @@
                     </button>
 
                     <!-- Si es SOCIO y ya está unido -->
-                    <span
-                        *ngIf="!esEmpleado && evento.idAsistentes?.includes(userId!)">
-                        Ya te has unido a este evento
-                    </span>
+                    <!-- Si es SOCIO y ya está unido -->
+                    <button
+                        *ngIf="!esEmpleado && evento.idAsistentes?.includes(userId!)"
+                        (click)="onRetirarAsistencia(evento.id!, userId!)">
+                        Retirar asistencia
+                    </button>
 
                 </div>
             </div>

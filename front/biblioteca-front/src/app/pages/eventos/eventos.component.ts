@@ -189,4 +189,23 @@ cerrarModal(): void {
   this.mostrarModal = false;
 }
 
+onRetirarAsistencia(idEvento: number, idSocio: number): void {
+  this.eventoService.retirarAsistencia(idEvento, idSocio).subscribe({
+    next: (eventoActualizado) => {
+      // Actualiza el evento en la lista principal
+      const index = this.eventos.findIndex(e => e.id === idEvento);
+      if (index !== -1) {
+        this.eventos[index] = eventoActualizado;
+      }
+
+      // Aplica de nuevo el filtrado y paginación
+      this.filtrarEventos();
+    },
+    error: (err) => {
+      console.error('Error al retirar asistencia:', err);
+    }
+  });
+}
+
+
 }

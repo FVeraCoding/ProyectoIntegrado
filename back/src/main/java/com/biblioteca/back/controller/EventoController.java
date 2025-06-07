@@ -97,5 +97,26 @@ public class EventoController {
 	public List<AsistenteVO> obtenerAsistentes(@PathVariable Long id) {
 	    return eventoService.obtenerAsistentesDelEvento(id);
 	}
+	
+	@DeleteMapping("/asistencia")
+	public ResponseEntity<EventoVO> retirarAsistencia(@RequestBody Map<String, Long> ids) {
+	    Long idEvento = ids.get("idEvento");
+	    Long idSocio = ids.get("idSocio");
+
+	    if (idEvento == null || idSocio == null) {
+	        return ResponseEntity.badRequest().build();
+	    }
+
+	    EventoVO evento = eventoService.findById(idEvento);
+	    SocioVO socio = socioService.findById(idSocio);
+
+	    EventoVO actualizado = eventoService.retirarAsistencia(evento, socio);
+	    if (actualizado != null) {
+	        return ResponseEntity.ok(actualizado);
+	    } else {
+	        return ResponseEntity.notFound().build();
+	    }
+	}
+
 
 }
