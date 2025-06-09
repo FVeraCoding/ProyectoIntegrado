@@ -22,7 +22,7 @@
     <ul *ngIf="listaReservas && listaReservas.length > 0">
       <li *ngFor="let reserva of listaReservas">
         <strong>{{ reserva.nombreLibro }}</strong>
-        <span> Desde: {{ reserva.fechaInicio }}</span>
+        <span> -  Desde: {{ reserva.fechaInicio }}</span>
         <span> hasta {{ reserva.fechaFin }}</span>
       </li>
     </ul>

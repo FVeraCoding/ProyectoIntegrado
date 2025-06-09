@@ -341,7 +341,7 @@ h1 {
   display: flex;
   width: calc(700px * 3); /* ✅ ajustado al número de imágenes */
   height: 400px;
-  animation: slideAnim 18s ease-in-out infinite;
+  animation: slideAnim 9s ease-in-out infinite;
 }
 
 
@@ -351,11 +351,15 @@ h1 {
   object-fit: cover; /* ✅ mantiene proporciones, recorta si es necesario */
     flex-shrink: 0; 
 }
+
 @keyframes slideAnim {
   0% { transform: translateX(0); }
-  33.33% { transform: translateX(0); }
-  38% { transform: translateX(-700px); }
-  71.33% { transform: translateX(-700px); }
-  76% { transform: translateX(-1400px); }
+  30% { transform: translateX(0); }
+
+  35% { transform: translateX(-700px); }
+  65% { transform: translateX(-700px); }
+
+  70% { transform: translateX(-1400px); }
   100% { transform: translateX(-1400px); }
 }
+

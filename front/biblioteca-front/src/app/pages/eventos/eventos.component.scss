@@ -348,9 +348,8 @@ h1 {
   display: flex;
   width: calc(700px * 3);
   height: 400px;
-  animation: slideAnim 18s ease-in-out infinite;
+  animation: slideAnim 9s ease-in-out infinite;
 }
-
 
 .slides img {
   width: 700px;
@@ -358,11 +357,14 @@ h1 {
   object-fit: cover; 
     flex-shrink: 0; 
 }
+
 @keyframes slideAnim {
   0% { transform: translateX(0); }
-  33.33% { transform: translateX(0); }
-  38% { transform: translateX(-700px); }
-  71.33% { transform: translateX(-700px); }
-  76% { transform: translateX(-1400px); }
+  30% { transform: translateX(0); }
+
+  35% { transform: translateX(-700px); }
+  65% { transform: translateX(-700px); }
+
+  70% { transform: translateX(-1400px); }
   100% { transform: translateX(-1400px); }
 }
