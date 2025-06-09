@@ -42,16 +42,19 @@
       <p>No estás inscrito en ningún evento.</p>
     </ng-template>
   </div>
-</div>
 
-<!-- 
-  <div class="usuario-seccion">
+    <div class="usuario-seccion">
     <h2>Mis clubes</h2>
-    <ul *ngIf="clubes.length > 0; else noClubes">
-      <li *ngFor="let club of clubes">
-        <strong>{{ club.nombre }}</strong> <span>({{ club.descripcion }})</span>
+    <ul *ngIf="listaClubs.length > 0; else noClubes">
+      <li *ngFor="let club of listaClubs">
+        <strong>{{ club.nombre }}</strong> - <span>({{ club.descripcion }})</span>
       </li>
     </ul>
     <ng-template #noClubes><p>No perteneces a ningún club.</p></ng-template>
   </div>
--->
+
+</div>
+
+
+
+

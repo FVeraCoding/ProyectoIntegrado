@@ -25,12 +25,14 @@ export class UsuarioComponent implements OnInit {
   listaReservas: Reserva[] = [];
   listaAsistencias: Asistente[] = [];
   eventosAsistidos: Evento[] = [];
+  listaClubs: Club[] = [];
 
   constructor(
     private socioService: SocioService,
     private authService: AuthService,
     private reservaService: ReservaService,
-    private eventoService: EventoService
+    private eventoService: EventoService,
+    private clubService: ClubService
   ) { }
 
   ngOnInit(): void {
@@ -46,6 +48,9 @@ export class UsuarioComponent implements OnInit {
         this.socio = socio;
         this.obtenerReservas(this.socio!.id);
         this.obtenerEventos(this.socio!.id);
+        if (this.socio && this.socio.id !== undefined && this.socio.id !== null) {
+          this.obtenerClubs(this.socio.id);
+        }
       },
       error: (err) => {
         console.error('Error al obtener el socio', err);
@@ -70,32 +75,45 @@ export class UsuarioComponent implements OnInit {
   }
 
   obtenerEventos(idSocio: number | undefined): void {
-  this.eventoService.getAsistenciasEventoBySocioId(idSocio).subscribe({
-    next: (asistencias: Asistente[]) => {
-      this.listaAsistencias = asistencias;
-      console.log('Asistencias:', this.listaAsistencias);
+    this.eventoService.getAsistenciasEventoBySocioId(idSocio).subscribe({
+      next: (asistencias: Asistente[]) => {
+        this.listaAsistencias = asistencias;
+        console.log('Asistencias:', this.listaAsistencias);
 
-      const solicitudesEventos = asistencias.map(a =>
-        this.eventoService.getById(a.idEvento)
-      );
+        const solicitudesEventos = asistencias.map(a =>
+          this.eventoService.getById(a.idEvento)
+        );
 
-      forkJoin(solicitudesEventos).subscribe({
-        next: eventos => {
-          this.eventosAsistidos = eventos;
-          console.log('Eventos asistidos:', this.eventosAsistidos);
-        },
-        error: err => {
-          console.error('Error al obtener eventos', err);
-          this.eventosAsistidos = [];
-        }
-      });
-    },
-    error: err => {
-      console.error("Error al obtener las asistencias", err);
-      this.listaAsistencias = [];
-    }
-  });
-}
+        forkJoin(solicitudesEventos).subscribe({
+          next: eventos => {
+            this.eventosAsistidos = eventos;
+            console.log('Eventos asistidos:', this.eventosAsistidos);
+          },
+          error: err => {
+            console.error('Error al obtener eventos', err);
+            this.eventosAsistidos = [];
+          }
+        });
+      },
+      error: err => {
+        console.error("Error al obtener las asistencias", err);
+        this.listaAsistencias = [];
+      }
+    });
+  }
+
+  obtenerClubs(idSocio: number): void {
+    this.clubService.getClubsBySocioId(idSocio).subscribe({
+      next: (clubs: Club[]) => {
+        this.listaClubs = clubs;
+        console.log(clubs);
+      },
+      error: err => {
+        console.error('Error al obtener los clubs', err);
+        this.listaClubs = [];
+      }
+    })
+  }
 
 
 
