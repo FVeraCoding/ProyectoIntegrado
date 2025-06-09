@@ -1,49 +1,50 @@
 <div class="usuario-container fade-in">
-    <h1>Mi Perfil</h1>
-    <div class="usuario-datos">
-        <h2>Datos personales</h2>
-        <ul *ngIf="socio as s">
-            <li><strong>Nombre:</strong> {{ s.nombre }}</li>
-            <li><strong>Apellidos:</strong> {{ s.apellidos }}</li>
-            <li *ngIf="s.telefono"><strong>Teléfono:</strong> {{ s.telefono
-                }}</li>
-            <li *ngIf="s.direccion"><strong>Dirección:</strong> {{ s.direccion
-                }}</li>
-        </ul>
+  <h1>Mi Perfil</h1>
+  <div class="usuario-datos">
+    <h2>Datos personales</h2>
+    <ul *ngIf="socio as s">
+      <li><strong>Nombre:</strong> {{ s.nombre }}</li>
+      <li><strong>Apellidos:</strong> {{ s.apellidos }}</li>
+      <li *ngIf="s.telefono"><strong>Teléfono:</strong> {{ s.telefono
+        }}</li>
+      <li *ngIf="s.direccion"><strong>Dirección:</strong> {{ s.direccion
+        }}</li>
+    </ul>
 
-        <div *ngIf="!socio">
-            Cargando datos...
-        </div>
-
+    <div *ngIf="!socio">
+      Cargando datos...
     </div>
 
-    <div class="usuario-datosr">
-    <h2>Mis reservas</h2>
-    <ul *ngIf="listaReservas && listaReservas.length > 0">
-        <li *ngFor="let reserva of listaReservas">
-            <strong>{{ reserva.nombreLibro }}</strong>
-            <span> Desde: {{ reserva.fechaInicio }}</span>
-            <span> hasta {{ reserva.fechaFin }}</span>
-        </li>
-    </ul>
-    <ng-template #noReservas>
-        <p>No tienes reservas activas.</p>
-    </ng-template>
-</div>
-
-
-</div>
-<!-- 
-  <div class="usuario-seccion">
-    <h2>Mis eventos</h2>
-    <ul *ngIf="eventos.length > 0; else noEventos">
-      <li *ngFor="let evento of eventos">
-        <strong>{{ evento.nombre }}</strong> <span>({{ evento.fecha }})</span>
-      </li>
-    </ul>
-    <ng-template #noEventos><p>No estás inscrito en ningún evento.</p></ng-template>
   </div>
 
+  <div class="usuario-seccion">
+    <h2>Mis reservas</h2>
+    <ul *ngIf="listaReservas && listaReservas.length > 0">
+      <li *ngFor="let reserva of listaReservas">
+        <strong>{{ reserva.nombreLibro }}</strong>
+        <span> Desde: {{ reserva.fechaInicio }}</span>
+        <span> hasta {{ reserva.fechaFin }}</span>
+      </li>
+    </ul>
+    <ng-template #noReservas>
+      <p>No tienes reservas activas.</p>
+    </ng-template>
+  </div>
+
+  <div class="usuario-seccion">
+    <h2>Mis eventos</h2>
+    <ul *ngIf="eventosAsistidos.length > 0; else noEventos">
+      <li *ngFor="let evento of eventosAsistidos">
+        <strong>{{ evento.nombre }}</strong> - Fecha: {{ evento.fecha }}
+      </li>
+    </ul>
+    <ng-template #noEventos>
+      <p>No estás inscrito en ningún evento.</p>
+    </ng-template>
+  </div>
+</div>
+
+<!-- 
   <div class="usuario-seccion">
     <h2>Mis clubes</h2>
     <ul *ngIf="clubes.length > 0; else noClubes">
@@ -54,4 +55,3 @@
     <ng-template #noClubes><p>No perteneces a ningún club.</p></ng-template>
   </div>
 -->
-

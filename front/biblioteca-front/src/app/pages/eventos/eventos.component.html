@@ -120,9 +120,9 @@
         <div class="modal">
             <h2>Asistentes al evento</h2>
 
-            <ul *ngIf="asistentes.length > 0; else noAsistentes">
-                <li *ngFor="let asistente of asistentes">
-                    {{ asistente.nombre }}
+            <ul *ngIf="asistentesNombre.length > 0; else noAsistentes">
+                <li *ngFor="let asistente of asistentesNombre">
+                    {{ asistente }}
                 </li>
             </ul>
 

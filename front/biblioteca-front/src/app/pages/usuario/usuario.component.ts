@@ -9,6 +9,9 @@ import { SocioService } from '../../core/services/socio.service';
 import { CommonModule } from '@angular/common';
 import { ReservaService } from '../../core/services/reserva.service';
 import { Reserva } from '../../core/models/reserva.model';
+import { Asistente } from '../../core/models/asistente.model';
+import { forkJoin } from 'rxjs';
+
 
 @Component({
   selector: 'app-usuario',
@@ -19,16 +22,18 @@ import { Reserva } from '../../core/models/reserva.model';
 
 export class UsuarioComponent implements OnInit {
   socio: Socio | null = null;
-  listaReservas: Reserva[] | null = [];
+  listaReservas: Reserva[] = [];
+  listaAsistencias: Asistente[] = [];
+  eventosAsistidos: Evento[] = [];
 
   constructor(
     private socioService: SocioService,
     private authService: AuthService,
-    private reservaService: ReservaService
+    private reservaService: ReservaService,
+    private eventoService: EventoService
   ) { }
 
   ngOnInit(): void {
-
     this.obtenerSocio();
   }
 
@@ -40,6 +45,7 @@ export class UsuarioComponent implements OnInit {
       next: (socio: Socio) => {
         this.socio = socio;
         this.obtenerReservas(this.socio!.id);
+        this.obtenerEventos(this.socio!.id);
       },
       error: (err) => {
         console.error('Error al obtener el socio', err);
@@ -58,9 +64,39 @@ export class UsuarioComponent implements OnInit {
       },
       error: (err) => {
         console.error("Error al obtener las reservas", err);
-        this.listaReservas = null;
+        this.listaReservas = [];
       }
     });
   }
+
+  obtenerEventos(idSocio: number | undefined): void {
+  this.eventoService.getAsistenciasEventoBySocioId(idSocio).subscribe({
+    next: (asistencias: Asistente[]) => {
+      this.listaAsistencias = asistencias;
+      console.log('Asistencias:', this.listaAsistencias);
+
+      const solicitudesEventos = asistencias.map(a =>
+        this.eventoService.getById(a.idEvento)
+      );
+
+      forkJoin(solicitudesEventos).subscribe({
+        next: eventos => {
+          this.eventosAsistidos = eventos;
+          console.log('Eventos asistidos:', this.eventosAsistidos);
+        },
+        error: err => {
+          console.error('Error al obtener eventos', err);
+          this.eventosAsistidos = [];
+        }
+      });
+    },
+    error: err => {
+      console.error("Error al obtener las asistencias", err);
+      this.listaAsistencias = [];
+    }
+  });
+}
+
+
 
 }

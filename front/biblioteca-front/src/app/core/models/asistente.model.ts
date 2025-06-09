@@ -1,4 +1,4 @@
 export interface Asistente {
-  id: number;
-  nombre: string;
+  idSocio: number;
+  idEvento: number;
 }

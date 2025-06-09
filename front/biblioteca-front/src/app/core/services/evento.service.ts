@@ -48,5 +48,9 @@ export class EventoService {
   });
   }
 
+  getAsistenciasEventoBySocioId(idSocio: number | undefined): Observable<Asistente[]>{
+    return this.http.get<Asistente[]>(`http://localhost:8080/asistencia/${idSocio}`);
+  }
+
 
 }

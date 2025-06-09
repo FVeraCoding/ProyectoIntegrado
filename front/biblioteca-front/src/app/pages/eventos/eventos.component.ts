@@ -6,6 +6,10 @@ import { Evento } from '../../core/models/evento.model';
 import { jwtDecode } from 'jwt-decode';
 import { EmpleadoService } from '../../core/services/empleado.service';
 import { Asistente } from '../../core/models/asistente.model';
+import { forkJoin } from 'rxjs';
+import { SocioService } from '../../core/services/socio.service';
+import { Socio } from '../../core/models/socio.model';
+
 
 interface JwtPayload {
   sub: string;
@@ -25,8 +29,10 @@ export class EventoComponent implements OnInit {
   eventosFiltrados: Evento[] = [];
   eventosPaginados: Evento[] = [];
   idEmpleado: number | null | undefined = null;
-  asistentes: Asistente[] = [];
-mostrarModal = false;
+  asistentesId: Asistente[] = [];
+  asistentesNombre: String[] = [];
+  mostrarModal = false;
+
 
 
   nuevoEvento: Evento = {
@@ -47,7 +53,11 @@ mostrarModal = false;
   elementosPorPagina: number = 6;
   totalPaginas: number = 1;
 
-  constructor(private eventoService: EventoService, private empleadoService: EmpleadoService) { }
+  constructor(
+    private eventoService: EventoService, 
+    private empleadoService: EmpleadoService,
+    private socioService: SocioService
+  ) { }
 
   ngOnInit(): void {
     this.obtenerRolDesdeToken();
@@ -162,47 +172,64 @@ mostrarModal = false;
   }
 
   unirseAEvento(eventoId: number): void {
-  if (!this.userId) return;
+    if (!this.userId) return;
 
-  this.eventoService.addAsistencia(eventoId, this.userId).subscribe((eventoActualizado) => {
-    const index = this.eventos.findIndex(e => e.id === eventoId);
-    if (index !== -1) {
-      this.eventos[index] = eventoActualizado; 
-      this.filtrarEventos(); 
-    }
-  });
-}
-
-verAsistentes(idEvento: number): void {
-  this.eventoService.getAsistentesEvento(idEvento).subscribe({
-    next: (data) => {
-      this.asistentes = data;
-      this.mostrarModal = true;
-    },
-    error: () => {
-      alert('Error al cargar los asistentes');
-    }
-  });
-}
-
-cerrarModal(): void {
-  this.mostrarModal = false;
-}
-
-onRetirarAsistencia(idEvento: number, idSocio: number): void {
-  this.eventoService.retirarAsistencia(idEvento, idSocio).subscribe({
-    next: (eventoActualizado) => {
-      // Actualiza el evento en la lista principal
-      const index = this.eventos.findIndex(e => e.id === idEvento);
+    this.eventoService.addAsistencia(eventoId, this.userId).subscribe((eventoActualizado) => {
+      const index = this.eventos.findIndex(e => e.id === eventoId);
       if (index !== -1) {
         this.eventos[index] = eventoActualizado;
+        this.filtrarEventos();
       }
+    });
+  }
 
-      // Aplica de nuevo el filtrado y paginación
-      this.filtrarEventos();
+  verAsistentes(idEvento: number): void {
+    this.eventoService.getAsistentesEvento(idEvento).subscribe({
+      next: (data) => {
+        this.asistentesId = data;
+        this.mostrarModal = true;
+        this.obtenerAsistentesDesdeId();
+      },
+      error: () => {
+        alert('Error al cargar los asistentes');
+      }
+    });
+  }
+
+  cerrarModal(): void {
+    this.mostrarModal = false;
+  }
+
+  onRetirarAsistencia(idEvento: number, idSocio: number): void {
+    this.eventoService.retirarAsistencia(idEvento, idSocio).subscribe({
+      next: (eventoActualizado) => {
+        // Actualiza el evento en la lista principal
+        const index = this.eventos.findIndex(e => e.id === idEvento);
+        if (index !== -1) {
+          this.eventos[index] = eventoActualizado;
+        }
+
+        // Aplica de nuevo el filtrado y paginación
+        this.filtrarEventos();
+      },
+      error: (err) => {
+        console.error('Error al retirar asistencia:', err);
+      }
+    });
+  }
+
+ obtenerAsistentesDesdeId(): void {
+  const peticiones = this.asistentesId.map(a =>
+    this.socioService.obtenerSocioPorId(a.idSocio)
+  );
+
+  forkJoin(peticiones).subscribe({
+    next: (socios) => {
+      this.asistentesNombre = socios.map(s => `${s.nombre} ${s.apellidos}`);
+      console.log(this.asistentesNombre);
     },
     error: (err) => {
-      console.error('Error al retirar asistencia:', err);
+      console.error('Error al obtener los nombres de los asistentes:', err);
     }
   });
 }
