@@ -143,7 +143,7 @@ public class EventoServiceImpl implements EventoService{
 	                return null;
 	            }
 	            UsuarioEntity usuario = socio.getUsuario();
-	            return new AsistenteVO(socio.getId(), usuario.getNombre());
+	            return new AsistenteVO(socio.getId(), evento.getId());
 	        })
 	        .filter(vo -> vo != null)
 	        .collect(Collectors.toList());

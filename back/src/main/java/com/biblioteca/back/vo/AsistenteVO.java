@@ -1,28 +1,34 @@
 package com.biblioteca.back.vo;
 
 public class AsistenteVO {
-	private Long id;
-	private String nombre;
+	private Long idSocio;
+	private Long idEvento;
 	
-	public AsistenteVO(Long id, String nombre) {
-		this.id = id;
-		this.nombre = nombre;
+	public AsistenteVO() {
+		super();
 	}
 
-	public Long getId() {
-		return id;
+	public AsistenteVO(Long idSocio, Long idEvento) {
+		super();
+		this.idSocio = idSocio;
+		this.idEvento = idEvento;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public Long getIdSocio() {
+		return idSocio;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public void setIdSocio(Long idSocio) {
+		this.idSocio = idSocio;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public Long getIdEvento() {
+		return idEvento;
 	}
+
+	public void setIdEvento(Long idEvento) {
+		this.idEvento = idEvento;
+	}
+	
 	
 }
