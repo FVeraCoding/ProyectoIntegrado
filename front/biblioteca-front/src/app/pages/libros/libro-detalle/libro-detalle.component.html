@@ -14,8 +14,21 @@
     <p *ngIf="libro.genero"><strong>Género:</strong> {{ libro.genero }}</p>
     <p *ngIf="libro.isbn"><strong>ISBN:</strong> {{ libro.isbn }}</p>
     <div class="ejemplaresDisponibles">
-      <h4>Ejemplares disponibles: {{ejemplaresRelacionados.length}}</h4>
-      <button class="botonReserva" (click)="reservarEjemplar()">Reservar</button>
+      <h4>Ejemplares disponibles: {{ ejemplaresDisponibles.length }}</h4>
+
+      <button
+        class="botonReserva"
+        *ngIf="isSocio() && ejemplaresDisponibles.length > 0"
+        (click)="reservarEjemplar()">
+        Reservar
+      </button>
+
+      <button
+        class="botonAgregarEjemplar"
+        *ngIf="isEmpleado()"
+        (click)="addEjemplar()">
+        Añadir ejemplar
+      </button>
     </div>
 
   </div>

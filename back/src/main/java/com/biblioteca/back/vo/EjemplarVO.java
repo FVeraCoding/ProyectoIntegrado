@@ -12,6 +12,10 @@ public class EjemplarVO {
 	private Long idLibro;
 	private List<ReservaVO> reservas;
 	
+	public EjemplarVO() {
+		super();
+	}
+
 	public EjemplarVO(boolean reservado) {
 		this.reservado = reservado;
 	}

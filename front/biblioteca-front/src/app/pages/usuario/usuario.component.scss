@@ -1,0 +1,54 @@
+.usuario-container {
+  max-width: 600px;
+  margin: 3rem auto;
+  background: linear-gradient(135deg, #fff7f0 60%, #f3e3d3 100%);
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 24px rgba(156, 69, 7, 0.08), 0 1.5px 6px rgba(0,0,0,0.04);
+  padding: 2.5rem 2rem 2rem 2rem;
+  animation: fadeIn 0.7s;
+}
+
+.usuario-datos, .usuario-seccion {
+  margin-bottom: 2.2rem;
+  background: #fff9f4;
+  border-radius: 0.8rem;
+  box-shadow: 0 0.4rem 1rem rgba(80, 55, 30, 0.08);
+  padding: 1.2rem 1rem 1rem 1rem;
+}
+
+.usuario-datos ul, .usuario-seccion ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.usuario-datos li, .usuario-seccion li {
+  margin-bottom: 0.7rem;
+  font-size: 1.08rem;
+  color: #8b735b;
+}
+
+h1 {
+  text-align: center;
+  color: #9c4507;
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
+}
+
+h2 {
+  color: #a15a27;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+strong {
+  color: #a15a27;
+}
+
+.fade-in {
+  animation: fadeIn 0.7s;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: none; }
+}

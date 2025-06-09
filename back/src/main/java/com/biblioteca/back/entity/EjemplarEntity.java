@@ -1,5 +1,6 @@
 package com.biblioteca.back.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -29,7 +30,7 @@ public class EjemplarEntity {
 	
 	@OneToMany(mappedBy="ejemplar")
 	@JsonManagedReference
-	private List<ReservaEntity> reservasEjemplar;
+	private List<ReservaEntity> reservasEjemplar = new ArrayList<>();
 	
 	public EjemplarEntity(Boolean reservado) {
 		this.reservado = reservado;

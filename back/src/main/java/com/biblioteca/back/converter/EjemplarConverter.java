@@ -1,9 +1,10 @@
 package com.biblioteca.back.converter;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.biblioteca.back.controller.ReservaController;
 import com.biblioteca.back.entity.EjemplarEntity;
 import com.biblioteca.back.entity.LibroEntity;
 import com.biblioteca.back.repository.LibroRepository;
@@ -31,12 +32,17 @@ public class EjemplarConverter {
 			EjemplarVO vo = new EjemplarVO(entity.getReservado());
 			
 			vo.setId(entity.getId());
-			vo.setIdLibro(entity.getId());
+			if (entity.getLibro() != null) {
+			    vo.setIdLibro(entity.getLibro().getId());
+			}
 			vo.setReservas(
-				    entity.getReservasEjemplar().stream()
-				        .map(reservaConverter::toVO)
-				        .toList()
+				    entity.getReservasEjemplar() != null
+				        ? entity.getReservasEjemplar().stream()
+				            .map(reservaConverter::toVO)
+				            .toList()
+				        : List.of()
 				);
+
 			
 			return vo;
 		}

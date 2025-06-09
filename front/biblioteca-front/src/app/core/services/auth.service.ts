@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, BehaviorSubject } from 'rxjs';
 import { Login } from '../models/login.model'; 
 import { Token } from '../models/token.model';
-import { Usuario } from '../models/usuario.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +10,9 @@ import { Usuario } from '../models/usuario.model';
 export class AuthService {
   private baseUrl = 'http://localhost:8080/auth';
   private tokenKey = 'auth-token';
+
+  private roleSubject = new BehaviorSubject<string | null>(this.getUserRole());
+  public role$ = this.roleSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -25,6 +27,8 @@ export class AuthService {
 
   private saveToken(token: string): void {
     localStorage.setItem(this.tokenKey, token);
+    const role = this.getUserRole();
+    this.roleSubject.next(role); // Notifica a los suscriptores del nuevo rol
   }
 
   getToken(): string | null {
@@ -33,49 +37,42 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem(this.tokenKey);
+    this.roleSubject.next(null); // Notifica que no hay usuario logueado
   }
 
   getUserRole(): string | null {
     const token = this.getToken();
-    if (!token) {
+    if (!token) return null;
+
+    try {
+      const payload = token.split('.')[1];
+      const decodedPayload = JSON.parse(atob(payload));
+      return decodedPayload.role || null;
+    } catch (error) {
+      console.error('Error decoding token role:', error);
       return null;
     }
-
-    const payload = token.split('.')[1];
-    const decodedPayload = JSON.parse(atob(payload));
-
-    return decodedPayload.role || null;
   }
-  isEmpleado(): boolean {
-  const token = this.getToken();
-  if (!token) return false;
-
-  try {
-    const payload = token.split('.')[1];
-    const decodedPayload = JSON.parse(atob(payload));
-    return decodedPayload.role === 'EMPLEADO';
-  } catch (error) {
-    console.error('Error decoding token', error);
-    return false;
-  }
-}
-
-  
-  isSocio(): boolean {
-  const token = this.getToken();
-  if (!token) return false;
-
-  try {
-    const payload = token.split('.')[1];
-    const decodedPayload = JSON.parse(atob(payload));
-    return decodedPayload.role === 'SOCIO';
-  } catch (error) {
-    console.error('Error decoding token', error);
-    return false;
-  }
-}
 
   getUserId(): number | null {
-    return null;
+    const token = this.getToken();
+    if (!token) return null;
+
+    try {
+      const payload = token.split('.')[1];
+      const decodedPayload = JSON.parse(atob(payload));
+      return decodedPayload.id ?? null;
+    } catch (error) {
+      console.error('Error decoding token id:', error);
+      return null;
+    }
+  }
+
+  isEmpleado(): boolean {
+    return this.getUserRole() === 'EMPLEADO';
+  }
+
+  isSocio(): boolean {
+    return this.getUserRole() === 'SOCIO';
   }
 }

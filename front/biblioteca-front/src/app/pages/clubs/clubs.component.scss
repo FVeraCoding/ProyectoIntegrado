@@ -52,12 +52,12 @@ h1 {
   margin-bottom: 4rem;
   margin-left: 5rem;
   margin-right: 5rem;
-  text-align: center;
 
   .section-title {
     font-size: 2.4rem;
     color: #9c4507;
     margin-bottom: 2rem;
+    text-align: center;
   }
 
   .libros-container {
@@ -69,6 +69,8 @@ h1 {
 
   .libro-card {
     width: 100%;
+    min-width: 370px;
+    max-width: 340px;
     background-color: white;
     border-radius: 1rem;
     padding: 1rem;

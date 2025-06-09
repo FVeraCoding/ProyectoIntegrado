@@ -41,6 +41,12 @@ public class SocioController {
         SocioVO socioVO = socioService.buscarPorIdUsuario(idUsuario);
         return ResponseEntity.ok(socioVO);
     }
+    
+    @GetMapping("/socio/{id}")
+    public ResponseEntity<SocioVO>obtenerSocioPorId(@PathVariable Long id){
+    	SocioVO socioVO = socioService.findById(id);
+    	return ResponseEntity.ok(socioVO);
+    }
 
     @PostMapping
     public ResponseEntity<SocioVO> crearSocio(@RequestBody RegistroSocioVO registroVO) {
