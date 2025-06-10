@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,12 +55,33 @@ public class SocioController {
         return ResponseEntity.ok(socioCreado);
     }
     
-    @DeleteMapping("/{idUsuario}")
+    @DeleteMapping("/usuario/{idUsuario}")
     @PreAuthorize("hasRole('EMPLEADO')")
     public ResponseEntity<Void> eliminarSocio(@PathVariable Long idUsuario) {
         socioService.eliminarPorIdUsuario(idUsuario);
         return ResponseEntity.noContent().build();
     }
+    
+    @DeleteMapping("/{idSocio}")
+    @PreAuthorize("hasRole('EMPLEADO')")
+    public ResponseEntity<Void> eliminarSocioByIdSocio(@PathVariable Long idSocio){
+    	socioService.eliminarPorIdSocio(idSocio);
+    	
+    	return ResponseEntity.noContent().build();
+    }
+    
+    @PutMapping("/{idSocio}")
+    @PreAuthorize("hasRole('EMPLEADO')")
+    public ResponseEntity<SocioVO> actualizarSocio(@PathVariable Long idSocio, @RequestBody SocioVO socioVO) {
+        if (!idSocio.equals(socioVO.getId())) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        socioService.updateSocioById(socioVO);
+        return ResponseEntity.ok(socioVO);
+    }
+
+    
 
 
 }

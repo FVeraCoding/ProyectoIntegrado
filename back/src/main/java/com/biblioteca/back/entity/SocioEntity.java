@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -45,15 +46,15 @@ public class SocioEntity {
 	@Column(name = "f_alta", nullable = false)
 	private LocalDate fechaAlta;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "usuario_id", nullable = false, unique = true)
 	private UsuarioEntity usuario;
 
-	@OneToMany(mappedBy = "socio")
+	@OneToMany(mappedBy = "socio", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	@JsonManagedReference
 	private List<ReservaEntity> reservas;
 	
-	@OneToMany(mappedBy = "socio")
+	@OneToMany(mappedBy = "socio", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	@JsonManagedReference
 	private List<AsistenciaEntity> asistencias;
 

@@ -1,0 +1,174 @@
+.socios-lista {
+  max-width: 40%;
+  background-color: #fff9f4;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 0.4rem 1rem rgba(80, 55, 30, 0.08);
+  margin: 0 auto;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    padding: 1.2rem;
+    background: linear-gradient(135deg, #fff7f0 60%, #f3e3d3 100%);
+    border-radius: 0.8rem;
+    box-shadow: 0 0.2rem 0.6rem rgba(0, 0, 0, 0.05);
+    margin-bottom: 1.2rem;
+    font-size: 1.2rem;
+    color: #8b735b;
+    animation: fadeIn 0.5s ease-in;
+
+    p {
+      margin-bottom: 0.6rem;
+      line-height: 1.5;
+    }
+
+    strong {
+      color: #a15a27;
+    }
+
+    .acciones-socio {
+      display: flex;
+      gap: 1.5rem;
+
+      a {
+        font-weight: 600;
+        color: #a15a27;
+        text-decoration: none;
+        font-size: 1.1rem;
+
+        &:hover {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  p {
+    font-size: 1.2rem;
+    color: #8b735b;
+  }
+}
+
+.paginacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+
+  button {
+    padding: 0.6rem 1.2rem;
+    font-size: 1.1rem;
+    background-color: #a15a27;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+
+    &:hover:enabled {
+      background-color: #8a451c;
+    }
+
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  }
+
+  span {
+    font-size: 1.1rem;
+    color: #8b735b;
+  }
+}
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+
+  .modal {
+    background: linear-gradient(135deg, #fff7f0 60%, #f3e3d3 100%);
+    padding: 2.5rem;
+    border-radius: 1.2rem;
+    box-shadow: 0 0.4rem 1.2rem rgba(80, 55, 30, 0.15);
+    width: 100%;
+    max-width: 500px;
+    animation: fadeIn 0.3s ease-in-out;
+
+    h2 {
+      color: #9c4507;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+
+      label {
+        font-weight: 600;
+        font-size: 1.3rem;
+        color: #8b735b;
+        margin-bottom: 0.2rem;
+      }
+
+      input {
+        padding: 0.6rem;
+        border: 1px solid #c8b8a6;
+        border-radius: 0.6rem;
+        font-size: 1.4rem;
+        outline: none;
+
+        &:focus {
+          border-color: #a15a27;
+        }
+      }
+
+      .acciones {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1.5rem;
+
+        button {
+          flex: 1;
+          margin: 0 0.5rem;
+          padding: 0.7rem 1.2rem;
+          background-color: #a15a27;
+          color: white;
+          border: none;
+          border-radius: 0.6rem;
+          font-size: 1.3rem;
+          font-weight: 600;
+          cursor: pointer;
+
+          &:hover {
+            background-color: #8a451c;
+          }
+
+          &:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}

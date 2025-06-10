@@ -19,7 +19,7 @@
 
   <div class="usuario-seccion">
     <h2>Mis reservas</h2>
-    <ul *ngIf="listaReservas && listaReservas.length > 0">
+    <ul *ngIf="listaReservas && listaReservas.length > 0; else noReservas">
       <li *ngFor="let reserva of listaReservas">
         <strong>{{ reserva.nombreLibro }}</strong>
         <span> -  Desde: {{ reserva.fechaInicio }}</span>

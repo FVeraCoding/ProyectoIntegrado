@@ -160,3 +160,26 @@ h1{
           background-color: #8a451c;
         }
       }
+
+@media (max-width: 900px) {
+  .libros-grid .libros-container {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1.2rem;
+  }
+  .libros-grid .libro-card {
+    padding: 1rem 0.5rem 0.7rem 0.5rem;
+    min-width: 140px;
+    max-width: 100%;
+  }
+}
+@media (max-width: 600px) {
+  .libros-grid .libros-container {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+  }
+  .libros-grid .libro-card {
+    min-height: 100px;
+    padding: 0.6rem 0.2rem 0.5rem 0.2rem;
+    font-size: 0.93em;
+  }
+}

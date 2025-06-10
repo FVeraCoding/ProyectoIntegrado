@@ -1,0 +1,56 @@
+<div class="usuario-seccion socios-lista">
+    <h2>Lista de socios</h2>
+
+    <ul *ngIf="allSocios.length > 0; else noSocios">
+        <li *ngFor="let socio of sociosPaginados">
+            <p>
+                <strong>{{ socio.nombre }} {{ socio.apellidos }}</strong><br>
+                Fecha de nacimiento: {{ socio.fechaNacimiento }}<br>
+                Correo electrónico: {{ socio.correoElectronico }}
+            </p>
+            <div class="acciones-socio">
+                <a (click)="abrirModalEdicion(socio)">Editar</a>
+                <a (click)="eliminarSocio(socio)">Eliminar</a>
+            </div>
+        </li>
+    </ul>
+
+    <div class="paginacion" *ngIf="totalPages > 1">
+        <button (click)="paginaAnterior()"
+            [disabled]="currentPage === 1">Anterior</button>
+        <span>Página {{ currentPage }} de {{ totalPages }}</span>
+        <button (click)="siguientePagina()"
+            [disabled]="currentPage === totalPages">Siguiente</button>
+    </div>
+
+    <ng-template #noSocios>
+        <p>No se ha encontrado ningún socio.</p>
+    </ng-template>
+</div>
+
+<!-- Modal de edición -->
+<div class="modal-backdrop" *ngIf="socioEditando">
+  <div class="modal">
+    <h2>Editar Socio</h2>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmitEdicion()">
+      <label>Nombre</label>
+      <input formControlName="nombre" />
+
+      <label>Apellidos</label>
+      <input formControlName="apellidos" />
+
+      <label>Correo electrónico</label>
+      <input type="email" formControlName="correoElectronico" />
+
+      <label>Fecha de nacimiento</label>
+      <input type="date" formControlName="fechaNacimiento" />
+
+      <div class="acciones">
+        <button type="submit" [disabled]="form.invalid">Guardar</button>
+        <button type="button" (click)="cerrarModalEdicion()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+

@@ -10,6 +10,7 @@ import { LibroDetalleComponent } from './pages/libros/libro-detalle/libro-detall
 import { ClubComponent } from './pages/clubs/clubs.component';
 import { EventoComponent } from './pages/eventos/eventos.component';
 import { UsuarioComponent } from './pages/usuario/usuario.component';
+import { SociosComponent } from './pages/socios/socios/socios.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -23,5 +24,6 @@ export const routes: Routes = [
   { path: 'libros/:id', component: LibroDetalleComponent },
   { path: 'clubs', component: ClubComponent},
   { path: 'eventos', component: EventoComponent },
-  { path: 'perfil', component: UsuarioComponent}
+  { path: 'perfil', component: UsuarioComponent},
+  { path: 'socios', component: SociosComponent }
 ];

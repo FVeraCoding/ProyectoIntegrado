@@ -9,6 +9,7 @@
       <a routerLink="/clubs" routerLinkActive="activo">Clubes de lectura</a>
       <a routerLink="/login" routerLinkActive="activo">Inicio de sesión</a>
       <a *ngIf="socio == true" routerLink="/perfil" routerLinkActive="activo">Mi perfil</a>
+      <a *ngIf="socio == false" routerLink="/socios" routerLinkActive="activo">Socios</a>
     </nav>
   </header>
   
