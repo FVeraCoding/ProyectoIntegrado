@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.biblioteca.back.service.ClubService;
 import com.biblioteca.back.vo.ClubVO;
+import com.biblioteca.back.vo.SocioVO;
 
 @RestController
 @RequestMapping("/club")
@@ -47,6 +48,13 @@ public class ClubController {
 	public ResponseEntity<List<ClubVO>> findClubsBySocioId(@PathVariable Long id){
 		return ResponseEntity.ok().body(service.findClubsBySociosId(id));
 	}
+	
+	@GetMapping("/{idClub}/socios")
+	public ResponseEntity<List<SocioVO>> obtenerSociosDelClub(@PathVariable Long idClub) {
+	    List<SocioVO> socios = service.obtenerSociosDelClub(idClub);
+	    return ResponseEntity.ok(socios);
+	}
+
 	
 	@PostMapping
 	public ResponseEntity<ClubVO> addClub(@RequestBody ClubVO vo){

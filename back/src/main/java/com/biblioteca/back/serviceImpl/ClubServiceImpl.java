@@ -1,6 +1,7 @@
 package com.biblioteca.back.serviceImpl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,9 @@ import com.biblioteca.back.repository.ClubRepository;
 import com.biblioteca.back.repository.SocioRepository;
 import com.biblioteca.back.service.ClubService;
 import com.biblioteca.back.vo.ClubVO;
+import com.biblioteca.back.vo.SocioVO;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class ClubServiceImpl implements ClubService{
@@ -39,6 +43,16 @@ public class ClubServiceImpl implements ClubService{
 		ClubEntity entity = repo.findById(id).orElseThrow(() -> new RuntimeException("No se ha encontrado el club con el id: "+id));
 		ClubVO vo = converter.toVO(entity);
 		return vo;
+	}
+
+	@Override
+	public List<SocioVO> obtenerSociosDelClub(Long idClub) {
+	    ClubEntity club = repo.findById(idClub)
+	        .orElseThrow(() -> new EntityNotFoundException("Club no encontrado"));
+
+	    return club.getSocios().stream()
+	        .map(socioConverter::toVO)
+	        .collect(Collectors.toList());
 	}
 
 

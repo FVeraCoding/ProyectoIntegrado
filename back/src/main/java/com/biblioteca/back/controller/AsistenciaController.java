@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.biblioteca.back.serviceImpl.AsistenciaServiceImpl;
 import com.biblioteca.back.vo.AsistenteVO;
 
-@Controller
+
 @RestController
 @RequestMapping("/asistencia")
 public class AsistenciaController {

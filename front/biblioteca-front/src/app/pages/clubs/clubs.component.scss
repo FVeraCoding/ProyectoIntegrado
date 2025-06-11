@@ -364,3 +364,19 @@ h1 {
   100% { transform: translateX(-1400px); }
 }
 
+.modal-backdrop{
+  button {
+    padding: 0.5rem 1rem;
+    font-size: 1.2rem;
+    background-color: #a15a27;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #8a451c;
+    }
+  }
+}
+

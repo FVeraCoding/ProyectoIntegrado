@@ -50,6 +50,11 @@
             (click)="abrirEdicion(club)">Editar</button>
           <button *ngIf="esEmpleado"
             (click)="eliminarClub(club.id!)">Eliminar</button>
+          <!-- Solo empleados pueden ver socios -->
+          <button *ngIf="esEmpleado" (click)="verSocios(club.id!)">
+            Ver socios
+          </button>
+
           <!-- Si es SOCIO y NO está unido -->
           <button
             *ngIf="!esEmpleado && !club.sociosId.includes(userId!)"
@@ -95,4 +100,24 @@
       </div>
     </div>
   </div>
+
+  <!-- Modal de lista de socios del club -->
+  <div class="modal-backdrop" *ngIf="mostrarModalSocios">
+    <div class="modal">
+      <h2>Socios del club</h2>
+
+      <ul *ngIf="sociosDelClub.length > 0; else noSocios">
+        <li *ngFor="let socio of sociosDelClub">
+          {{ socio.nombre }} {{ socio.apellidos }}
+        </li>
+      </ul>
+
+      <ng-template #noSocios>
+        <p>No hay socios inscritos en este club.</p>
+      </ng-template>
+
+      <button class="acciones" (click)="cerrarModalSocios()">Cerrar</button>
+    </div>
+  </div>
+
 </div>

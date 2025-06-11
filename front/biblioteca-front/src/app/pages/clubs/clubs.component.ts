@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { jwtDecode } from 'jwt-decode';
 import { EmpleadoService } from '../../core/services/empleado.service';
+import { Socio } from '../../core/models/socio.model';
 
 interface JwtPayload {
   sub: string;
@@ -35,16 +36,20 @@ export class ClubComponent implements OnInit {
   elementosPorPagina: number = 6;
   totalPaginas: number = 1;
 
+  mostrarModalSocios: boolean = false;
+  sociosDelClub: Socio[] = [];
+
+
   constructor(private clubService: ClubService, private empleadoService: EmpleadoService) { }
 
   ngOnInit(): void {
     this.obtenerRolDesdeToken();
 
     if (this.esEmpleado && this.userId) {
-    this.empleadoService.getEmpleadoByIdUsuario(this.userId).subscribe(empleado => {
-      this.nuevoClub.idEmpleadoOrganizador = empleado.id!;
-    });
-  }
+      this.empleadoService.getEmpleadoByIdUsuario(this.userId).subscribe(empleado => {
+        this.nuevoClub.idEmpleadoOrganizador = empleado.id!;
+      });
+    }
 
     this.cargarClubs();
   }
@@ -54,7 +59,7 @@ export class ClubComponent implements OnInit {
     if (token) {
       const decoded = jwtDecode<JwtPayload>(token);
       this.esEmpleado = decoded.role === 'EMPLEADO';
-      this.userId = decoded.id; 
+      this.userId = decoded.id;
     }
   }
 
@@ -74,20 +79,20 @@ export class ClubComponent implements OnInit {
     });
   }
 
-crearClub(): void {
-  if (!this.nuevoClub.idEmpleadoOrganizador) return; // Verificamos que esté asignado correctamente
+  crearClub(): void {
+    if (!this.nuevoClub.idEmpleadoOrganizador) return; // Verificamos que esté asignado correctamente
 
-  this.clubService.addClub(this.nuevoClub).subscribe(() => {
-    this.nuevoClub = {
-      nombre: '',
-      descripcion: '',
-      idEmpleadoOrganizador: this.nuevoClub.idEmpleadoOrganizador, // mantener el organizador
-      sociosId: []
-    };
-    this.mostrarModalCrear = false;
-    this.cargarClubs();
-  });
-}
+    this.clubService.addClub(this.nuevoClub).subscribe(() => {
+      this.nuevoClub = {
+        nombre: '',
+        descripcion: '',
+        idEmpleadoOrganizador: this.nuevoClub.idEmpleadoOrganizador, // mantener el organizador
+        sociosId: []
+      };
+      this.mostrarModalCrear = false;
+      this.cargarClubs();
+    });
+  }
 
 
   eliminarClub(id: number): void {
@@ -157,18 +162,37 @@ crearClub(): void {
 
 
   onRetirarSocioClub(idClub: number, idSocio: number): void {
-  this.clubService.retirarSocioDelClub(idClub, idSocio).subscribe({
-    next: (clubActualizado) => {
-      const index = this.clubs.findIndex(c => c.id === idClub); // ← corregido
-      if (index !== -1) {
-        this.clubs[index] = clubActualizado;
-        this.filtrarClubs(); // recarga paginación
+    this.clubService.retirarSocioDelClub(idClub, idSocio).subscribe({
+      next: (clubActualizado) => {
+        const index = this.clubs.findIndex(c => c.id === idClub); // ← corregido
+        if (index !== -1) {
+          this.clubs[index] = clubActualizado;
+          this.filtrarClubs(); // recarga paginación
+        }
+      },
+      error: (err) => {
+        console.error('Error al retirar socio del club:', err);
       }
-    },
-    error: (err) => {
-      console.error('Error al retirar socio del club:', err);
-    }
-  });
-}
+    });
+  }
+
+  verSocios(idClub: number): void {
+    this.clubService.getSociosByClubId(idClub).subscribe({
+      next: (socios) => {
+        this.sociosDelClub = socios;
+        this.mostrarModalSocios = true;
+      },
+      error: (err) => {
+        console.error('Error al obtener socios del club', err);
+      }
+    });
+  }
+
+  cerrarModalSocios(): void {
+    this.mostrarModalSocios = false;
+    this.sociosDelClub = [];
+  }
+
+
 
 }

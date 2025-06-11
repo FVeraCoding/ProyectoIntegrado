@@ -3,6 +3,7 @@ package com.biblioteca.back.service;
 import java.util.List;
 
 import com.biblioteca.back.vo.ClubVO;
+import com.biblioteca.back.vo.SocioVO;
 
 public interface ClubService {
 
@@ -15,6 +16,6 @@ public interface ClubService {
 	List<ClubVO> findAll();
 	ClubVO addSocio(Long idClub, Long idSocio);
 	ClubVO retirarSocio(Long idClub, Long idSocio);
+	List<SocioVO> obtenerSociosDelClub(Long idClub);
 
-	
 }
