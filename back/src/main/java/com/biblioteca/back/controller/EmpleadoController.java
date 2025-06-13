@@ -28,7 +28,7 @@ public class EmpleadoController {
         this.empleadoService = empleadoService;
     }
 
-    // Crear empleado con usuario
+    
     @PreAuthorize("hasRole('EMPLEADO')")
     @PostMapping
     public ResponseEntity<EmpleadoVO> crearEmpleado(@RequestBody RegistroEmpleadoVO registroEmpleadoVO) {

@@ -79,12 +79,19 @@ public class SocioServiceImpl implements SocioService {
 
 	@Override
 	public void eliminarPorIdUsuario(Long idUsuario) {
-		SocioEntity socio = socioRepository.findByUsuarioId(idUsuario)
-				.orElseThrow(() -> new RuntimeException("Socio no encontrado con ID de usuario: " + idUsuario));
+	    SocioEntity socio = socioRepository.findByUsuarioId(idUsuario)
+	        .orElseThrow(() -> new RuntimeException("Socio no encontrado con ID de usuario: " + idUsuario));
 
-		socioRepository.delete(socio);
-		usuarioRepository.deleteById(idUsuario);
+	    if (socio.getListaClubes() != null) {
+	        socio.getListaClubes().forEach(club -> club.getSocios().remove(socio));
+	        socio.getListaClubes().clear();
+	        socioRepository.save(socio);
+	    }
+
+	    socioRepository.delete(socio);
+	    usuarioRepository.deleteById(idUsuario);
 	}
+
 
 	@Override
 	public SocioVO findById(Long id) {
@@ -96,8 +103,18 @@ public class SocioServiceImpl implements SocioService {
 
 	@Override
 	public void eliminarPorIdSocio(Long idSocio) {
-		socioRepository.deleteById(idSocio);
+	    SocioEntity socio = socioRepository.findById(idSocio)
+	        .orElseThrow(() -> new RuntimeException("Socio no encontrado con ID: " + idSocio));
+
+	    if (socio.getListaClubes() != null) {
+	        socio.getListaClubes().forEach(club -> club.getSocios().remove(socio));
+	        socio.getListaClubes().clear();
+	        socioRepository.save(socio);
+	    }
+
+	    socioRepository.delete(socio);
 	}
+
 
 
 	@Override
