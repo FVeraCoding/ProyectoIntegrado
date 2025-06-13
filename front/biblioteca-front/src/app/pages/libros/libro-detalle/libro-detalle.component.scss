@@ -25,6 +25,7 @@
 
   .libro-detalle-info {
     flex: 2 1 500px;
+    margin: 0 auto;
 
     h2 {
       font-size: 2rem;
@@ -149,4 +150,26 @@
         &:hover {
           background-color: #8a451c;
         }
+}
+
+@media (max-width: 768px) {
+  .libro-detalle-container {
+    flex-direction: column;
+    align-items: center;
+
+
+    .libro-detalle-info {
+      flex: 1 1 auto;
+      text-align: center;
+      margin: 0 auto;
+    }
+
+    .libro-detalle-img {
+      justify-content: center;
+    }
+  }
+
+  .botonReserva {
+    width: 100%;
+  }
 }
